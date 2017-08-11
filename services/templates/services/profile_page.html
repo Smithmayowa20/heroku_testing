@@ -1,0 +1,17 @@
+{% extends 'services/base.html' %}
+{% block content %}
+        {% if user.is_authenticated %}
+		<br/>
+		<div class="text-center">
+		{% if image %}
+		<p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="450" height="450"></p>
+		{% endif %}
+		<p>Username:<br/> {{ profile.user }} </p> 
+			{% if user != profile.user %}
+		<a href="{% url 'follower_following' user1=profile.user.id %}"> <span class="btn btn-info"> Follow-{{profile.user}} </span></a><br/><br/>
+			{% endif %}
+		<p>Short Bio:<br/> {{ profile.short_bio }} </p>
+		</div>
+		
+		{% endif %}
+{% endblock content %}

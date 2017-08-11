@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'services',
+	'registration',
+	'django_summernote'
 ]
 
 MIDDLEWARE = [
@@ -118,7 +121,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-
+LOGIN_REDIRECT_URL = "profile_page"
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
@@ -137,3 +140,86 @@ STATIC_URL = '/static/'
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+ACCOUNT_ACTIVATION_DAYS = 7
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'smithmayowa20@gmail.com'
+EMAIL_HOST_PASSWORD = '1Laryairn'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+
+SUMMERNOTE_CONFIG = {
+    # Using SummernoteWidget - iframe mode
+    'iframe': True,  # or set False to use SummernoteInplaceWidget - no iframe mode
+
+    # Using Summernote Air-mode
+    'airMode': False,
+
+    # Use native HTML tags (`<b>`, `<i>`, ...) instead of style attributes
+    # (Firefox, Chrome only)
+    'styleWithTags': True,
+
+    # Set text direction : 'left to right' is default.
+    'direction': 'ltr',
+
+    # Change editor size
+    'width': '100%',
+    'height': '480',
+
+    # Use proper language setting automatically (default)
+    'lang': None,
+
+    # Or, set editor language/locale forcely
+    'lang': 'en-US',
+
+    # Customize toolbar buttons
+    'toolbar': [
+        ['style', ['style']],
+        ['style', ['bold', 'italic', 'underline', 'clear','color','fontname','fontsize','superscript','subscript']],
+        ['para', ['ul', 'ol', 'height','paragraph']],
+        ['insert', ['link','video','picture','table']],
+    ],
+
+    # Need authentication while uploading attachments.
+    'attachment_require_authentication': True,
+
+    # Set `upload_to` function for attachments.
+    #'attachment_upload_to': my_custom_upload_to_func(),
+	
+	
+    # Set custom storage class for attachments.
+    #'attachment_storage_class': 'my.custom.storage.class.name',
+
+    # Set custom model for attachments (default: 'django_summernote.Attachment')
+    #'attachment_model': 'my.custom.attachment.model', # must inherit 'django_summernote.AbstractAttachment'
+
+	
+    # Set common css/js media files
+    'default_css_for_inplace': (
+        '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css',
+        os.path.join(STATIC_URL, 'django_summernote/summernote.css'),
+        os.path.join(STATIC_URL, 'django_summernote/django_summernote_inplace.css'),
+    ),
+    'default_js_for_inplace': (
+        '//code.jquery.com/jquery-1.9.1.min.js',
+        '//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js',
+        os.path.join(STATIC_URL, 'django_summernote/jquery.ui.widget.js'),
+        os.path.join(STATIC_URL, 'django_summernote/jquery.iframe-transport.js'),
+        os.path.join(STATIC_URL, 'django_summernote/jquery.fileupload.js'),
+        os.path.join(STATIC_URL, 'django_summernote/summernote.min.js'),
+    ),
+
+    # You can disable file upload feature.
+    'disable_upload': False,
+
+    # You can disable file upload feature.
+    'disable_upload': False,
+
+    # Codemirror as codeview
+    'codemirror': {
+            # Please visit http://summernote.org/examples/#codemirror-as-codeview
+            'theme': 'monokai',
+    },
+
+}

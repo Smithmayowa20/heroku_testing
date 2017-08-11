@@ -1,0 +1,14 @@
+{% extends 'services/base.html' %}
+{% block title %}
+    Edit Detail
+{% endblock title %}
+
+{% block content %}
+    <h3>Editing Post</h3>
+    <form role="form" action="" method="post">
+        {% csrf_token %}
+		{{ form.media }}
+        {{ form }}
+    <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock content %}

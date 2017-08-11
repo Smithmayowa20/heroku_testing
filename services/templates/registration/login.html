@@ -1,0 +1,28 @@
+{% extends 'services/base.html' %}
+{% block title %}
+    Login - {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading text-center"><h1>Login Form</h1></div>
+    <div class="panel-body text-center">
+	<form method="POST" class="post-form">
+        {% csrf_token %}
+		{% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="display: none">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+      {% endfor %}
+	  <div class="panel-footer text-center">
+   <button type="submit" class="save btn btn-default">Submit</button></div>
+    </form></div>
+</div>
+{% endblock content %}
