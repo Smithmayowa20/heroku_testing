@@ -33,31 +33,37 @@ def edit_profile_page(request):
 
 		
 def profile_page(request,user=None):
-	if user:
-		try:
-			profile = User_Profile.objects.get(user=user)
-		except:
-			profile = User_Profile.objects.get(user=user) 
-	else:
-		profile = User_Profile.objects.get(user=request.user)
-	if profile.picture:
-		image = True
-	else:
-		image = False
-	return (render(request,'services/profile_page.html',{'profile':profile,'image':image}))
-
+	try:
+		if user:
+			try:
+				profile = User_Profile.objects.get(user=user)
+			except:
+				profile = User_Profile.objects.get(user=user) 
+		else:
+			profile = User_Profile.objects.get(user=request.user)
+		if profile.picture:
+			image = True
+		else:
+			image = False
+		return (render(request,'services/profile_page.html',{'profile':profile,'image':image}))
+	except:
+		return redirect('landing_page')
+		
 def landing_page(request):
 	post_dict = {}
 	genre = (Genre.objects.all())
-	genre_no = len(genre)
-	for i in range(genre_no):
-		post_genre = genre[i]
-		post = Post.objects.filter(genre = post_genre, front_page = True)
-		post_key = str(post_genre.category)
-		post_dict[post_key] = post
-		post_key2 = str(post_genre.category) + "1"
-		post_dict[post_key2] = post_genre.category
-	return (render(request,'services/landing_page.html',post_dict,))
+	try:
+		genre_no = len(genre)
+		for i in range(genre_no):
+			post_genre = genre[i]
+			post = Post.objects.filter(genre = post_genre, front_page = True)
+			post_key = str(post_genre.category)
+			post_dict[post_key] = post
+			post_key2 = str(post_genre.category) + "1"
+			post_dict[post_key2] = post_genre.category
+		return (render(request,'services/landing_page.html',post_dict,))
+	except:
+		return (render(request,'services/landing_page.html'))
 	
 def genre_category(request,category):
 	genre = Genre.objects.get(category=category)

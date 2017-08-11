@@ -2,7 +2,7 @@
     {% block content %}
 	<div class="text-center"> <h2> FRONT-PAGE POSTS FROM ALL SECTIONS </h2> </div><br/><br/>
 	
-	
+	{% if Music %}
 	<p> <a href="{% url 'genre_category' category=Music1 %}"> <span class="btn btn-block btn-success"> MUSIC RELATED SECTION </span></a></p>
 	{% for i in Music %}
 	<div class="col-sm-12"><p><h3>{{ i.text|safe }}</h3></p>
@@ -13,8 +13,11 @@
 	{% endfor %}
 	<p class="text-center"><a href="{% url 'genre_category' category=Music1 %}"> <span class="btn btn-default">View More From Music Category</span></a></p>
 	<br/><br/><br/><br/>
+	{% else %}
+	<p><span class="btn btn-block btn-success"> MUSIC RELATED SECTION </span></p>
+	{% endif %}
 	
-	
+	{% if Fashion %}
 	<p> <a href="{% url 'genre_category' category=Fashion1 %}"> <span class="btn btn-block btn-success"> FASHION RELATED SECTION </span></a></p>
 	{% for i in Fashion %}
 	<div class="col-sm-12"><p><h3>{{ i.text|safe }}}}</h3></p>
@@ -25,8 +28,11 @@
 	{% endfor %}
 	<p class="text-center"><a href="{% url 'genre_category' category=Fashion1 %}"> <span class="btn btn-default">View More From Fashion Category</span></a></p>
 	<br/><br/><br/><br/>
+	{% else %}
+	<p><span class="btn btn-block btn-success"> FASHION RELATED SECTION </span></p>
+	{% endif %}
 	
-	
+	{% if Teaching %}
 	<p> <a href="{% url 'genre_category' category=Teaching1 %}"> <span class="btn btn-block btn-success"> TEACHING RELATED SECTION </span></a></p>
 	{% for i in Teaching %}
 	<div class="col-sm-12"><p><h3>{{ i.text|safe }}}}</h3></p>
@@ -37,8 +43,11 @@
 	{% endfor %}
 	<p class="text-center"><a href="{% url 'genre_category' category=Teaching1 %}"> <span class="btn btn-default">View More From Teaching Category</span></a></p>
 	<br/><br/><br/><br/>
+	{% else %}
+	<p><span class="btn btn-block btn-success"> TEACHING RELATED SECTION </span></p>
+	{% endif %}
 	
-	
+	{% if Art %}
 	<p> <a href="{% url 'genre_category' category=Art1 %}"> <span class="btn btn-block btn-success"> ART RELATED SECTION </span></a></p>
 	{% for i in Art %}
 	<div class="col-sm-12"><p><h3>{{ i.text|safe }}}}</h3></p>
@@ -49,4 +58,7 @@
 	{% endfor %}
 	<p class="text-center"><a href="{% url 'genre_category' category=Art1 %}"> <span class="btn btn-default">View More From Art Category</span></a></p>
 	<br/><br/><br/><br/>
+	{% else %}
+	<p><span class="btn btn-block btn-success"> ART RELATED SECTION </span></p>
+	{% endif %}
 	{% endblock content %}
