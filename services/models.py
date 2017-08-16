@@ -15,12 +15,23 @@ class User_Profile(models.Model):
 	user = models.OneToOneField(User, blank=True, null=True)
 	link = models.Url = models.URLField(
 			blank=True, null=True)
+	followers = models.ManyToManyField(User,
+			blank=True,related_name="followers")
+	following = models.ManyToManyField(User,
+			blank=True,related_name="following")
 	
 	def publish(self):
 		self.save()
 		
 	def __str__(self):
 		return str(self.slug)
+		
+	def follow(self,follow):
+		self.following.add(follow)
+		
+	def follower(self,follower):
+		self.followers.add(follower)
+		
 		
 
 class Post(models.Model):
@@ -36,27 +47,25 @@ class Post(models.Model):
 			default=timezone.now)
 	published_date = models.DateTimeField(
 			blank=True, null=True)
-	slug = models.SlugField(unique=True)
 	
 	def publish(self):
 		self.published_date = timezone.now()
 		self.save()
 
 	def __str__(self):
-		return self.slug
+		return self.text
 		
 class Comment(models.Model):
 	user = models.ForeignKey(User, blank=True, null=True)
 	post = models.ForeignKey(Post, null=True)
 	text = models.TextField()
-	slug = models.SlugField(unique=True)
 	created_date = models.DateTimeField(
 			default=timezone.now)
 	published_date = models.DateTimeField(
 			blank=True, null=True)
 	position = models.PositiveSmallIntegerField(
 			blank=True, null=True)
-	parent_comment_slug = models.SlugField(
+	parent_comment_no = models.PositiveSmallIntegerField(
 	blank=True, null=True)
 	
 	def publish(self):
@@ -71,9 +80,9 @@ class Genre(models.Model):
 	about = models.CharField(max_length=200,
 			blank=True, null=True)
 			
-class Following(models.Model):
+'''class Following(models.Model):
 	action = models.ForeignKey(User, related_name="custom_user_profile_action")
-	reaction = models.ForeignKey(User, related_name="custom_user_profile_reaction" )
+	reaction = models.ForeignKey(User, related_name="custom_user_profile_reaction" )'''
 
 		
 	

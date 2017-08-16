@@ -6,7 +6,7 @@
 </div>
 <div class="text-right">
 <a href="{% url 'profile_page2' user=post.user %}"><h3><div class="text-center">written by:{{post.user|safe|linebreaksbr}}</div></h3></a>
-<h3><div class="text-right">{{post.published_date|safe|linebreaksbr}}</div></h3>
+<h3><div class="text-right">{{post.published_date|linebreaksbr}}</div></h3>
 <br/>
 </div>
 <br/>
@@ -23,7 +23,7 @@
 <h4>{{comment_.published_date}}</h4>
 </p>
 <p>
-<a href="{% url 'new_comment' slug=post.slug position=comment_.position parent_slug=comment_.slug%}" class="top-menu"><span class="btn btn-default">reply</span></a>
+<a href="{% url 'new_comment' pk=post.pk position=comment_.position parent_no=comment_.pk%}" class="top-menu"><span class="btn btn-default">reply</span></a>
 </p>
 {% endfor %}
 {% endblock content %}

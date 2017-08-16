@@ -121,7 +121,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-LOGIN_REDIRECT_URL = "profile_page"
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
@@ -148,6 +147,8 @@ EMAIL_HOST_USER = 'smithmayowa20@gmail.com'
 EMAIL_HOST_PASSWORD = '1Laryairn'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
+LOGIN_REDIRECT_URL = "landing_page"
+LOGOUT_REDIRECT_URL = "landing_page"
 
 SUMMERNOTE_CONFIG = {
     # Using SummernoteWidget - iframe mode

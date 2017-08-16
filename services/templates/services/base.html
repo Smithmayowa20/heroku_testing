@@ -45,7 +45,7 @@
   }
   .panel-footer .btn {
       margin: 15px 0;
-      background-color: #aaa;
+      background-color: #afa;
       color: #fff;
   }
 			
@@ -82,6 +82,9 @@
 						<li>
 							<a href="{% url 'auth_logout' %}"><span class="glyphicon glyphicon-log-in"></span> LOGOUT </a>
 						</li>
+						<li>
+							<a href="{% url 'profile_page2' user=request.user.username %}">{{ request.user.username|upper }}</a>
+						</li>
 					{% else %}
 						<li>
 							<a href="{% url 'auth_login' %}"><span class="glyphicon glyphicon-log-in"></span> LOGIN </a>
@@ -91,14 +94,11 @@
 						</li>
 						
 					{% endif %}
-					<li>
-							<a href="{% url 'profile_page' %}">{{ request.user.username|upper }}</a>
-						</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-
+						
 	
 
 						<div class="jumbotron post" >
