@@ -32,8 +32,8 @@ class User_Profile(models.Model):
 	def follower(self,follower):
 		self.followers.add(follower)
 		
-		
 
+		
 class Post(models.Model):
 	genre = models.ForeignKey('Genre',
 			blank=True,null=True)
@@ -47,6 +47,9 @@ class Post(models.Model):
 			default=timezone.now)
 	published_date = models.DateTimeField(
 			blank=True, null=True)
+	user_profile = models.ForeignKey('User_Profile',
+			blank=True,null=True)
+
 	
 	def publish(self):
 		self.published_date = timezone.now()
@@ -55,6 +58,42 @@ class Post(models.Model):
 	def __str__(self):
 		return self.text
 		
+class File_upload(models.Model):
+	file = models.FileField(
+		blank=True,null=True)
+	post = models.ForeignKey(Post,
+		blank=True,null=True)
+		
+	def __str__(self):
+		return str(self.file)
+	
+class Image_upload1(models.Model):
+	image = models.ImageField(
+		blank=True,null=True)
+	post = models.ForeignKey(Post,
+		blank=True,null=True)
+		
+	def __str__(self):
+		return str(self.file)	
+
+class Image_upload2(models.Model):
+	image = models.ImageField(
+		blank=True,null=True)
+	post = models.ForeignKey(Post,
+		blank=True,null=True)
+		
+	def __str__(self):
+		return str(self.file)
+		
+class Image_upload3(models.Model):
+	image = models.ImageField(
+		blank=True,null=True)
+	post = models.ForeignKey(Post,
+		blank=True,null=True)
+		
+	def __str__(self):
+		return str(self.file)
+	
 class Comment(models.Model):
 	user = models.ForeignKey(User, blank=True, null=True)
 	post = models.ForeignKey(Post, null=True)

@@ -13,4 +13,5 @@ url(r'^post/new-comment/(?P<pk>\d+)/(?P<position>\d+)/(?P<parent_no>\d+)/$', vie
 url(r'^profile/$',views.profile_page,name='profile_page'),
 url(r'^profile/(?P<user>[-\w]+)$',views.profile_page,name='profile_page2'),
 url(r'^$',views.landing_page,name='landing_page'),
+url(r'^home/$',views.user_feed,name='user_feed'),
 url(r'^category/(?P<category>[-\w]+)$',views.genre_category,name='genre_category'),]

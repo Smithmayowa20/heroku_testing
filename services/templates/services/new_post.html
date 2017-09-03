@@ -1,17 +1,17 @@
 {% extends 'services/base.html' %}
 {% block content %}
     <h1>New post</h1>
-    <form method="POST" class="post-form">
+    <form method="POST" class="post-form" enctype="multipart/form-data">
 	    {% csrf_token %}
-		{{ form.media }}
         {{ form.as_p}}
+		
+		<div class="col-md-4 col-xs-4"> {{ Image1.as_p}}</div>
+		<div class="col-md-4 col-xs-4">{{ Image2.as_p}}</div>
+		<div class="col-md-4 col-xs-4">{{ Image3.as_p}}</div>
+		<div class="col-md-4 col-xs-4">{{ file1.as_p}}</div>
+		<div class="col-md-8 col-xs-8"></div>
+		<div class="col-md-12 col-xs-12">
         <button type="submit" class="save btn btn-default">Save</button>
+		</div>
     </form>
-	<script>
-	$(document).ready(function() {
-		$('#summernote').summernote({
-			lang: 'ko-KR' // default: 'en-US'
-		});
-	});
-	</script>
 {% endblock %}

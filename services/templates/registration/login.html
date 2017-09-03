@@ -1,28 +1,44 @@
 {% extends 'services/base.html' %}
-{% block title %}
-    Login - {{ block.super }}
-{% endblock title %}
 
 {% block content %}
-<div class="panel panel-default">
-  <div class="panel-heading text-center"><h1>Login Form</h1></div>
-    <div class="panel-body text-center">
-	<form method="POST" class="post-form">
-        {% csrf_token %}
-		{% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="display: none">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-      {% endfor %}
-	  <div class="panel-footer text-center">
-   <button type="submit" class="save btn btn-default">Submit</button></div>
-    </form></div>
+
+<div class="container">
+<div class="bg-faded p-4 my-4">
+            <hr class="divider">
+            <h2 class="text-center text-lg text-uppercase my-0">LOGIN <strong>Form</strong></h2>
+            <hr class="divider">
+			<div class="text-center">
+			<form method="POST" class="post-form">
+				{% csrf_token %}
+				{% for field in form %}
+				<p>
+				{{ field.label_tag }}<br>
+				{{ field }}
+				{% if field.help_text %}
+				<small style="display: none">{{ field.help_text }}</small>
+				{% endif %}
+				{% for error in field.errors %}
+				<p style="color: red">{{ error }}</p>
+				{% endfor %}
+				</p>
+				{% endfor %}
+			<button type="submit" class="save btn btn-default">Submit</button>
+			</form>
+			<h2 class="text-center text-lg text-uppercase my-0"><strong>OR</strong></h2>
+			<hr class="divider">
+			<h2 class="text-center text-lg text-uppercase my-0">
+				<strong>
+				<a href="{% url 'registration_register' %}">
+					<span class="btn btn-default">
+						<span class="glyphicon glyphicon-user"></span> 
+						SIGNUP 
+					</span>
+				</a>
+				</strong>
+			</h2>
+			<hr class="divider">
+			</div>
 </div>
-{% endblock content %}
+</div>
+
+{% endblock content %}	

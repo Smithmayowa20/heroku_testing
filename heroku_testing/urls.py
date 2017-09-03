@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from services.backends import MyRegistrationView
 from registration.backends.default.views import RegistrationView
 from registration.forms import RegistrationFormUniqueEmail
 from django.conf.urls.static import static
@@ -24,8 +23,10 @@ from django.conf import settings
 app_name = 'services'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-	url(r'', include('services.urls')),
 	url(r'^summernote/',include('django_summernote.urls')),
-	url(r'^accounts/', include('registration.backends.simple.urls')),
 	url(r'^accounts/register/$', RegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
+	url(r'^accounts/', include('registration.backends.default.urls')),
+	url(r'', include('services.urls')),
 ]
+'''if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)'''

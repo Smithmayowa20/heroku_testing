@@ -1,0 +1,76 @@
+{% extends 'services/base.html' %}
+       {% block title %} {{block.super}} {% endblock title %}
+	   {% block header %} {% endblock header %}
+	   {% block aside %}
+	   <br>
+	   <br>
+	   {% if profile.picture %}
+	   <p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="450" height="450"></p>
+	   {% else %}
+	   <p><img src="" alt="Click-To-Upload-Your-Picture" class="img-thumbnail" width="900" height="900"></p>
+	   {% endif %}
+	   <br>
+	   <br/>
+	   <br/>
+	   <h4>Your Followers:
+	   {% for i in user_follower %} {{i}} {% endfor %}</h4>
+	   <h4>People You Follow:
+	   {% for i in user_following %} {{i}} {% endfor %}</h4>
+	   {% endblock aside %}
+	   {% block content %}
+	<div class="text-center ">
+		<h1>
+			
+			Your Feed 
+			<hr class="intro-divider"/> 
+		</h1> 	
+			<h5>
+				Create new post :
+				<h6>
+				categories: {% for i in category %}
+				<a href="{% url 'new_post' category=i.category %}">{{i.category}}</a> |
+				{% endfor %}
+				</h6>
+			</h5>
+			
+			<hr class="intro-divider"/>
+			<h5>
+				Filter by :
+				<h6>
+					<a href="">(categories)</a>
+					<a href="">(popular posts)</a>
+				</h6>
+			</h5>
+			
+			<hr class="intro-divider"/>
+		
+	</div>
+	
+	   {% for i in promoted_post %} 
+	   <div class="post-content">
+	   <div class="row">
+	   <div class="col-md-2 col-xs-2">
+	   <a href="{% url 'profile_page2' user=i.user %}"> <h3><div class="text-right"> {{i.user}}</div></h3></a>
+	   
+	   </div>
+	   <div class="col-md-10 col-xs-10"><p><h3>{{ i.text }}</h3></p>
+	   <h4><div class="text-right">{{i.published_date}}</div></h4>
+	   <pre>BOOSTED POST</pre>
+	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
+	   </div></div><br/><br/>
+	   {% endfor %}
+	   
+	   {% for i in post %}
+	   <div>
+	   <div class="row">
+	   <div class="col-md-2 col-xs-2">
+	   <a href="{% url 'profile_page2' user=i.user %}"> <h3><div class="text-right"> {{i.user}}</div></h3></a>
+	   </div>
+	   <div class="col-md-10 col-xs-10"><p><h3>{{ i.text }}</h3></p>
+	   <h4><div class="text-right">{{i.published_date}}</div></h4>
+	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
+	   </div></div><br/><br/>
+	   
+	   {% endfor %} 
+	   {% endblock content %}
+	   {% block aside2 %} {% endblock aside2 %}

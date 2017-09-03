@@ -150,3 +150,6 @@ footer {
 p.copyright {
   margin: 15px 0 0;
 }
+
+.navbar .navbar-default { background-color: #ee88ee; !important
+}
