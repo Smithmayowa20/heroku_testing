@@ -6,12 +6,13 @@
 			
 .post-content { background-color: rgb(200,255,124,0.1) !important;
 			}
-			
+
+nav{ background-color: rgb(200,100,250,1) !important;
+}	
 			
 .navbar-nav li a,.navbar .navbar-header a{
 			color: rgb(255,255,255) !important;
 			letter-spacing:5px;
-			background-color: rgb(200,100,250,1) !important;
 			}
 			
 			
