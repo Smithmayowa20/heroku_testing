@@ -62,7 +62,10 @@ def profile_page(request,user=None):
 			
 @login_required
 def user_feed(request):
-	user = User_Profile.objects.get(user=request.user)
+	try:
+		user = User_Profile.objects.get(user=request.user)
+	except:
+		return redirect('edit_profile_page')
 	following_users = user.following.all()
 	following_post = Post.objects.filter(user__in=following_users)
 	category = Genre.objects.all()

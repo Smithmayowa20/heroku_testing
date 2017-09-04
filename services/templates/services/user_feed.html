@@ -45,13 +45,13 @@
 			<hr class="intro-divider"/>
 		
 	</div>
-	
+	 {% if promoted_post %}
 	   {% for i in promoted_post %} 
 	   <div class="post-content">
 	   <div class="row">
 	   <div class="col-md-2 col-xs-2">
 	   <a href="{% url 'profile_page2' user=i.user %}"> <h3><div class="text-right"> {{i.user}}</div></h3></a>
-	   
+	  
 	   </div>
 	   <div class="col-md-10 col-xs-10"><p><h3>{{ i.text }}</h3></p>
 	   <h4><div class="text-right">{{i.published_date}}</div></h4>
@@ -59,7 +59,8 @@
 	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
 	   </div></div><br/><br/>
 	   {% endfor %}
-	   
+	 {% endif %} 
+    {% if post %}
 	   {% for i in post %}
 	   <div>
 	   <div class="row">
@@ -69,8 +70,8 @@
 	   <div class="col-md-10 col-xs-10"><p><h3>{{ i.text }}</h3></p>
 	   <h4><div class="text-right">{{i.published_date}}</div></h4>
 	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
-	   </div></div><br/><br/>
-	   
+	   </div></div><br/><br/>  
 	   {% endfor %} 
+	{% endif %}
 	   {% endblock content %}
 	   {% block aside2 %} {% endblock aside2 %}
