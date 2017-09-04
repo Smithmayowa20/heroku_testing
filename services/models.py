@@ -17,7 +17,7 @@ class User_Profile(models.Model):
 			blank=True, null=True)
 	followers = models.ManyToManyField(User,
 			blank=True,related_name="followers")
-	following = models.OneToOneField(User,
+	following = models.ManyToManyField(User,
 			blank=True,related_name="following")
 	
 	def publish(self):

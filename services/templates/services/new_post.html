@@ -5,13 +5,11 @@
 	    {% csrf_token %}
         {{ form.as_p}}
 		
-		<div class="col-md-4 col-xs-4"> {{ Image1.as_p}}</div>
-		<div class="col-md-4 col-xs-4">{{ Image2.as_p}}</div>
-		<div class="col-md-4 col-xs-4">{{ Image3.as_p}}</div>
-		<div class="col-md-4 col-xs-4">{{ file1.as_p}}</div>
-		<div class="col-md-8 col-xs-8"></div>
-		<div class="col-md-12 col-xs-12">
+		<div class="col-md-12 col-xs-12"> {{ Image1.as_p}}</div>
+		<div class="col-md-12 col-xs-12">{{ Image2.as_p}}</div>
+		<div class="col-md-12 col-xs-12">{{ Image3.as_p}}</div>
+		<div class="col-md-12 col-xs-12">{{ file1.as_p}}</div>
+		<<br>
         <button type="submit" class="save btn btn-default">Save</button>
-		</div>
     </form>
 {% endblock %}
