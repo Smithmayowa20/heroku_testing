@@ -25,7 +25,7 @@ SECRET_KEY = '%oltyy01g(3e_176+!41)c8-w4-(w777kyk3nh6cyzbhgp^3)4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['quiet-bastion-69430.herokuapp.com','127.0.0.1']
+ALLOWED_HOSTS = ['quiet-bastion-69430.herokuapp.com','127.0.0.1','vauntoff.us-west-2.elasticbeanstalk.com']
 
 
 # Application definition
