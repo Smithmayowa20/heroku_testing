@@ -2,6 +2,10 @@ branch-defaults:
   master:
     environment: vauntoff
     group_suffix: null
+environment-defaults:
+  vauntoff:
+    branch: null
+    repository: null
 global:
   application_name: Vauntoff
   branch: null
