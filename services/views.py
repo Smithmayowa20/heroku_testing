@@ -47,13 +47,16 @@ def profile_page(request,user=None):
 				user1 = User.objects.get(username=user)
 				profile = User_Profile.objects.get(user=user1)
 				image = get_picture(profile)
+				post = Post.objects.filter(user=user1)
 			except:
 				profile = profile = User_Profile.objects.get(user=user)
 				image = get_picture(profile)
+				post = Post.objects.filter(user=user)
 		else:
 			profile = User_Profile.objects.get(user=request.user)
 			image = get_picture(profile)
-		return (render(request,'services/profile_page.html',{'profile':profile,'image':image}))
+			post = Post.objects.filter(user=request.user)
+		return (render(request,'services/profile_page.html',{'profile':profile,'image':image,'post':post}))
 	except:
 		if (user) and (user==request.user.username):
 			return redirect('edit_profile_page')

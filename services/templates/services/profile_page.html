@@ -1,17 +1,41 @@
 {% extends 'services/base.html' %}
 {% block content %}
 		<br/>
+		<br/>
+		<br/>
 		<div class="text-center">
 		{% if image %}
 		<p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="450" height="450"></p>
+		{% else %}
+		<img src="" alt="" class="img-thumbnail" width="450" height="450">
 		{% endif %}
-		<p>Username:<br/> {{ profile.user }} </p> 
+		<p><h4>Username:</h4><br/> {{ profile.user }} </p><br/>
+		<br/>
+		<br/> 
 		{% if user.is_authenticated %}
 			{% if user != profile.user %}
 		<a href="{% url 'follow' user1=profile.user %}"> <span class="btn btn-info"> Follow-{{profile.user}} </span></a><br/><br/>
 			{% endif %}
 		{% endif %}
-		<p>Short Bio:<br/> {{ profile.short_bio }} </p>
+		<p><h4>Short Bio:</h4><br/> {{ profile.short_bio }} </p>
+		<br/>
+		<br/>
+		<br/>
+		<h5> {{profile.user}} posts </h5>
+		</div>
+		<div>
+		<p>
+		{% if post %}
+		{% for i in post %}
+			<div class="">
+	   <div class="row">
+	   <div class="col-md-12 col-xs-12"><p><h4>{{ i.text }}</h4></p>
+	   <h6><div class="text-right">{{i.published_date}}</div></h6>
+	   <a href="{% url 'profile_page2' user=i.user %}"> <h6><div class="text-right"> {{i.user}}</div></h6></a>
+	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
+	   </div></div><br/><br/>  
+			{% endfor %}
+			{% endif %}
 		</div>
 
 {% endblock content %}

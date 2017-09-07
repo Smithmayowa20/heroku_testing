@@ -1,11 +1,6 @@
 
 
-.jumbotron { background-color: rgb(255,255,255,0.1) !important;
-			}
-			
-			
-.post-content { background-color: rgb(200,255,124,0.1) !important;
-			}
+		
 
 nav { background-color: rgb(255,255,255,1) !important;
 }
@@ -56,12 +51,10 @@ body {
       font: 400 15px Lato, sans-serif;
       line-height: 1.8;
       color: #818181;
+	  background-color: #ffffff;
   }
   
-  
-.post-content { background-color: rgb(200,255,124,0.1);
-			}
-			
+
 			body, html {
   width: 100%;
   height: 100%;

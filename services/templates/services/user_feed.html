@@ -1,29 +1,36 @@
 {% extends 'services/base.html' %}
        {% block title %} {{block.super}} {% endblock title %}
-	   {% block header %} {% endblock header %}
 	   {% block aside %}
+	   <br>
+	   <br>
+	   <br>
+	   <br>
 	   <br>
 	   <br>
 	   {% if profile.picture %}
 	   <p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="450" height="450"></p>
 	   {% else %}
-	   <p><img src="" alt="Click-To-Upload-Your-Picture" class="img-thumbnail" width="900" height="900"></p>
+	   <p><img src="https://sorry.com" alt="Click-To-Upload-Your-Picture" class="img-thumbnail" width="450" height="450"></p>
 	   {% endif %}
 	   <br>
 	   <br/>
 	   <br/>
-	   <h4>Your Followers:
-	   {% for i in user_follower %} {{i}} {% endfor %}</h4>
-	   <h4>People You Follow:
-	   {% for i in user_following %} {{i}} {% endfor %}</h4>
+	   <h5>Your Followers:
+	   {% for i in user_follower %} {{i}} {% endfor %}</h5>
+	   <h5>People You Follow:
+	   {% for i in user_following %} {{i}} {% endfor %}</h5>
 	   {% endblock aside %}
-	   {% block content %}
+	   {% block header %}
+	   <br>
 	<div class="text-center ">
+		<div style="background-color:aqua;">
+		 <br>
 		<h1>
 			
 			Your Feed 
 			<hr class="intro-divider"/> 
 		</h1> 	
+			<div class="col-md-6 col-xs-6" style="background-color:aqua;">
 			<h5>
 				Create new post :
 				<h6>
@@ -32,8 +39,8 @@
 				{% endfor %}
 				</h6>
 			</h5>
-			
-			<hr class="intro-divider"/>
+			</div>
+			<div class="col-md-6 col-xs-6" style="background-color:aqua;">
 			<h5>
 				Filter by :
 				<h6>
@@ -41,17 +48,22 @@
 					<a href="">(popular posts)</a>
 				</h6>
 			</h5>
-			
+			</div>
 			<hr class="intro-divider"/>
-		
+		</div>
 	</div>
+	{% endblock header %}
+	{% block content %}
+	 <br>
+	   <br>
+	   <br>
 	 {% if promoted_post %}
 	   {% for i in promoted_post %} 
-	   <div class="post-content">
+	   <div class="">
 	   <div class="row">
-	   <div class="col-md-12 col-xs-12"><p><h3>{{ i.text }}</h3></p>
-	   <h4><div class="text-right">{{i.published_date}}</div></h4>
-	   <a href="{% url 'profile_page2' user=i.user %}"><h3><div class="text-right"> {{i.user}}</div></h3></a>
+	   <div class="col-md-12 col-xs-12"><p><h6>{{ i.text }}</h6></p>
+	   <h6><div class="text-right">{{i.published_date}}</div></h6>
+	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right"> {{i.user}}</div></h6></a>
 	   <pre>BOOSTED POST</pre>
 	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
 	   </div></div><br/><br/>
@@ -59,14 +71,20 @@
 	 {% endif %} 
     {% if post %}
 	   {% for i in post %}
-	   <div>
+	   <div class="">
 	   <div class="row">
-	   <div class="col-md-12 col-xs-12"><p><h3>{{ i.text }}</h3></p>
-	   <h4><div class="text-right">{{i.published_date}}</div></h4>
-	   <a href="{% url 'profile_page2' user=i.user %}"> <h3><div class="text-right"> {{i.user}}</div></h3></a>
+	   <div class="col-md-12 col-xs-12"><p><h6>{{ i.text }}</h6></p>
+	   <h6><div class="text-right">{{i.published_date}}</div></h6>
+	   <a href="{% url 'profile_page2' user=i.user %}"> <h6><div class="text-right"> {{i.user}}</div></h6></a>
 	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
 	   </div></div><br/><br/>  
 	   {% endfor %} 
 	{% endif %}
 	   {% endblock content %}
-	   {% block aside2 %} {% endblock aside2 %}
+	   {% block aside2 %}
+		<br>
+	   <br>
+	   <br><br>
+	   <br>
+	   <br>
+	   {% endblock aside2 %}

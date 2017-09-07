@@ -16,10 +16,7 @@
 		<link href="{% static "services/vendor/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
 		<link href="{% static "services/css/landing_page.css" %}" rel="stylesheet">
 	<style>
-	.jumbotron { background-color: rgb(255,255,255,0.1) !important;
-			}
-	.post-content { background-color: rgb(200,255,124,0.1) !important;
-			}
+	
 		</style>
     </head>
 
@@ -43,7 +40,7 @@
 							<a href="{% url 'auth_logout' %}"><span class="glyphicon glyphicon-log-in"></span> LOGOUT </a>
 						</li>
 						<li>
-							<a href="{% url 'profile_page2' user=request.user.username %}">{{ request.user.username|upper }}</a>
+							<a href="{% url 'profile_page2' user=request.user.username %}"><span class="glyphicon glyphicon-user"></span>{{ request.user.username|upper }}</a>
 						</li>
 					{% else %}
 						<li>
@@ -61,22 +58,22 @@
 
 	{% block header %} {% endblock header %}
 
-						<div class="jumbotron">
+						<div class="">
 							<div class="row">
 								<div class="col-md-12 col-xs-12"></div>
-								<div class="col-md-2 col-xs-12">
+								<div class="col-md-3 col-xs-12">
 									<aside>
 										{% block aside %} {% if user.is_authenticated %} {% endif %} {% endblock aside %}
 									</aside>
 								</div>
-								<div class="col-md-8 col-xs-12">
+								<div class="col-md-6 col-xs-12">
 									<article >
-										<div class="container">
+										<div class="">
 										{% block content %} {% endblock content %}
 										</div>
 									</article>
 								</div>
-								<div class="col-md-2 col-xs-12">
+								<div class="col-md-3 col-xs-12">
 									<aside>
 										{% block aside2 %} {% endblock aside2 %}
 									</aside>
