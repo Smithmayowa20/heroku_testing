@@ -55,12 +55,11 @@
 			</div>
 		</div>
 	</nav>
-
+<div>
 	{% block header %} {% endblock header %}
-
+</div>
 						<div class="">
 							<div class="row">
-								<div class="col-md-12 col-xs-12"></div>
 								<div class="col-md-3 col-xs-12">
 									<aside>
 										{% block aside %} {% if user.is_authenticated %} {% endif %} {% endblock aside %}

@@ -1,16 +1,40 @@
 {% extends 'services/base.html' %}
-{% block content %}
-    <h1>New post</h1>
-    <form method="POST" class="post-form" enctype="multipart/form-data">
-
-	    {% csrf_token %}
-        {{ form.as_p}}
-		
-		<div class="col-md-12 col-xs-12"> {{ Image1.as_p}}</div>
-		<div class="col-md-12 col-xs-12">{{ Image2.as_p}}</div>
-		<div class="col-md-12 col-xs-12">{{ Image3.as_p}}</div>
-		<div class="col-md-12 col-xs-12">{{ file1.as_p}}</div>
-		<<br>
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
-{% endblock %}
+{% block header %}
+<br>
+<br>
+<br>
+<div class="container">
+<div class="bg-faded p-4 my-4">
+            <h2 class="text-center text-lg text-uppercase my-0"> <strong>NEW POST</strong></h2>
+            <hr class="divider">
+			<div class="text-center">
+			<form method="POST" class="post-form" enctype="multipart/form-data">
+				{% csrf_token %}
+				{% for field in form %}
+				<p>
+				{{ field.label_tag }}<br>
+				{{ field }}
+				{% if field.help_text %}
+				<small style="display: none">{{ field.help_text }}</small>
+				{% endif %}
+				{% for error in field.errors %}
+				<p style="color: red">{{ error }}</p>
+				{% endfor %}
+				</p>
+				{% endfor %}
+			</div>
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+			{{ Image1.as_p}}
+			{{ Image2.as_p}}
+			{{ Image3.as_p}}
+			{{ file1.as_p}}
+			<button type="submit" class="save btn btn-default">Submit</button>
+			<hr class="divider">
+			</div>
+			<div class="col-md-4"></div>
+			</form>
+			            
+</div>
+</div>
+{% endblock header%}

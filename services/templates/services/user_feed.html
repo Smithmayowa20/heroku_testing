@@ -1,20 +1,6 @@
 {% extends 'services/base.html' %}
        {% block title %} {{block.super}} {% endblock title %}
 	   {% block aside %}
-	   <br>
-	   <br>
-	   <br>
-	   <br>
-	   <br>
-	   <br>
-	   {% if profile.picture %}
-	   <p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="450" height="450"></p>
-	   {% else %}
-	   <p><img src="https://sorry.com" alt="Click-To-Upload-Your-Picture" class="img-thumbnail" width="450" height="450"></p>
-	   {% endif %}
-	   <br>
-	   <br/>
-	   <br/>
 	   <h5>Your Followers:
 	   {% for i in user_follower %} {{i}} {% endfor %}</h5>
 	   <h5>People You Follow:
@@ -26,7 +12,13 @@
 		<div style="background-color:aqua;">
 		 <br>
 		<h1>
-			
+		<div class="text-left">
+			{% if profile.picture %}
+	   <p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="40" height="40"></p>
+	   {% else %}
+	   <p><img src="" alt="" class="img-thumbnail" width="40" height="40"></p>
+	   {% endif %}
+	   </div>
 			Your Feed 
 			<hr class="intro-divider"/> 
 		</h1> 	
@@ -55,13 +47,11 @@
 	{% endblock header %}
 	{% block content %}
 	 <br>
-	   <br>
-	   <br>
 	 {% if promoted_post %}
 	   {% for i in promoted_post %} 
 	   <div class="">
 	   <div class="row">
-	   <div class="col-md-12 col-xs-12"><p><h6>{{ i.text }}</h6></p>
+	   <div class="col-md-12 col-xs-12"><p><h5>{{ i.text|safe|linebreaksbr }}</h5></p>
 	   <h6><div class="text-right">{{i.published_date}}</div></h6>
 	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right"> {{i.user}}</div></h6></a>
 	   <pre>BOOSTED POST</pre>
@@ -73,7 +63,7 @@
 	   {% for i in post %}
 	   <div class="">
 	   <div class="row">
-	   <div class="col-md-12 col-xs-12"><p><h6>{{ i.text }}</h6></p>
+	   <div class="col-md-12 col-xs-12"><p><h5>{{ i.text|safe|linebreaksbr }}</h5></p>
 	   <h6><div class="text-right">{{i.published_date}}</div></h6>
 	   <a href="{% url 'profile_page2' user=i.user %}"> <h6><div class="text-right"> {{i.user}}</div></h6></a>
 	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>

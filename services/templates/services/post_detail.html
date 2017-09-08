@@ -1,8 +1,10 @@
 {% extends 'services/base.html' %}
        {% block title %} {{block.super}} {% endblock title %}
 {% block content %}
-<div class="text-center">
+<div class="">
 <br/>
+<br>
+<br>
 <hr class="intro-divider"/>
 <p><h3>{{ post.text|safe|linebreaksbr }}</h3></p>
 <p> {% for i in file %} {% if i.file %}<a href="{{ i.file.url }}"> {{i}} {% endif %}{% endfor %}</a></p>
@@ -16,11 +18,14 @@
 <br/>
 <div class="text-left">
 <h3>COMMENTS</h3>
+<hr class="intro-divider"/>
 <form method="POST" class="post-form">
 	    {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
 </form>
+<br>
+<br>
 {% for comment_ in comment %}
 <p>
 <h4>{{comment_.text}}</h4>
@@ -29,5 +34,6 @@
 <p>
 <a href="{% url 'new_comment' pk=post.pk position=comment_.position parent_no=comment_.pk%}" class="top-menu"><span class="btn btn-default">reply</span></a>
 </p>
+<hr class="intro-divider"/>
 {% endfor %}
 {% endblock content %}
