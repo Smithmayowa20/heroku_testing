@@ -39,11 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 	'services',
 	'registration',
+	'storages',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-	'whitenoise.middleware.WhiteNoiseMiddleware',
+	#'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -143,9 +144,9 @@ DATABASES['default'].update(db_from_env)
 
 # The absolute path to the directory where collectstatic will collect static files for deployment.
 
-STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
+#STATIC_ROOT = os.path.join(BASE_DIR, "www", "static")
 # The URL to use when referring to static files (where they will be served from)
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 
 '''STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -168,6 +169,22 @@ REGISTRATION_AUTO_LOGIN = False
 REGISTRATION_EMAIL_REGISTER_SUCESS_URL = "auth_login"
 REGISTRATION_EMAIL_ACTIVATE_SUCESS_URL = "edit_profile_page"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+#MEDIA_URL = "/media/"
+#MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 
+AWS_ACCESS_KEY_ID = 'AKIAIRRRKUMNVJFLQ4VQ'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'smithmayowa'
+AWS_S3_CUSTOM_DOMAIN = '{}s.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'services/static'),
+]
+STATIC_URL = 'https://{}/{}/'.format (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+DEFAULT_FILE_STORAGE = 'heroku_testing.storage_backends.MediaStorage'

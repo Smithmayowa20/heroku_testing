@@ -36,6 +36,9 @@
 	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
 	   </div></div><br/><br/>  
 			{% endfor %}
+		{% if post_no > 10 %}
+		<div class="btn btn-block btn-info">More {{profile.user}} posts</div>
+		{% endif %}
 			{% endif %}
 		</div>
 	<hr class="divider">

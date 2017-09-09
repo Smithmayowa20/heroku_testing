@@ -60,19 +60,21 @@
 </div>
 						<div class="">
 							<div class="row">
-								<div class="col-md-3 col-xs-12">
+								<div class="col-md-2 col-xs-12">
 									<aside>
 										{% block aside %} {% if user.is_authenticated %} {% endif %} {% endblock aside %}
 									</aside>
 								</div>
-								<div class="col-md-6 col-xs-12">
+								<div class="col-md-8 col-xs-12">
 									<article >
-										<div class="">
+									<div class="col-xs-1"></div>
+										<div class="col-xs-10">
 										{% block content %} {% endblock content %}
 										</div>
+									<div class="col-xs-1"></div>
 									</article>
 								</div>
-								<div class="col-md-3 col-xs-12">
+								<div class="col-md-2 col-xs-12">
 									<aside>
 										{% block aside2 %} {% endblock aside2 %}
 									</aside>
