@@ -224,10 +224,11 @@ def post_detail(request,pk):
 	recent_post = (Post.objects.all().order_by('-published_date'))[0:5]
 	post = get_object_or_404(Post, pk=pk)
 	file = File_upload.objects.filter(post = post)
+	image = Image_upload1.objects.filter(post = post)
 	form = new_comment1(request,post)
 	comm = Comment.objects.filter(post=post,position=1)
 	comment = c.commen(comm,post)
-	return (render(request,'services/post_detail.html',{'post':post,'comment':comment,'form':form,'recent':recent_post,'file':file}))
+	return (render(request,'services/post_detail.html',{'post':post,'comment':comment,'form':form,'recent':recent_post,'file':image}))
 	
 @login_required		 
 def new_comment(request,pk,position=0,parent_no=None):

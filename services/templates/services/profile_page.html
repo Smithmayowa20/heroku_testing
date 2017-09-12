@@ -4,12 +4,13 @@
 		<br/>
 		<br/>
 		<div class="text-center">
+		<div style="background-color:aqua">
 		{% if image %}
 		<p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="450" height="450"></p>
 		{% else %}
 		<img src="" alt="" class="img-thumbnail" width="450" height="450">
 		{% endif %}
-		<p><h4>Username:</h4><br/> {{ profile.user }} </p><br/>
+		<h4>Username:</h4> {{ profile.user|upper }} <br/>
 		<br/>
 		<br/> 
 		{% if user.is_authenticated %}
@@ -17,11 +18,14 @@
 		<a href="{% url 'follow' user1=profile.user %}"> <span class="btn btn-info"> Follow-{{profile.user}} </span></a><br/><br/>
 			{% endif %}
 		{% endif %}
-		<p><h4>Short Bio:</h4><br/> {{ profile.short_bio }} </p>
+		</div>
+		<br/>
+		<br/>
+		<p><h4>Short Bio:</h4> {{ profile.short_bio }} </p>
 		<br/>
 		<br/>
 		<br/>
-		<h5> {{profile.user}} posts </h5>
+		<h4> {{profile.user|upper}} POSTS  </h4>
 		<hr class="divider">
 		</div>
 		<div>

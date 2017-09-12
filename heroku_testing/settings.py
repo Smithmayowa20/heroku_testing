@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from decouple import config, Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,12 +21,12 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%oltyy01g(3e_176+!41)c8-w4-(w777kyk3nh6cyzbhgp^3)4'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ['quiet-bastion-69430.herokuapp.com','127.0.0.1','vauntoff.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Application definition
@@ -155,27 +156,31 @@ DATABASES['default'].update(db_from_env)
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-ACCOUNT_ACTIVATION_DAYS = 7
+ACCOUNT_ACTIVATION_DAYS = config('ACCOUNT_ACTIVATION_DAYS', cast=int)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'smithmayowa20@gmail.com'
-EMAIL_HOST_PASSWORD = '1Laryairn'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-LOGIN_REDIRECT_URL = "landing_page"
-LOGOUT_REDIRECT_URL = "landing_page"
-SEND_ACTIVATION_EMAIL = True
-REGISTRATION_AUTO_LOGIN = False
-REGISTRATION_EMAIL_REGISTER_SUCESS_URL = "auth_login"
-REGISTRATION_EMAIL_ACTIVATE_SUCESS_URL = "edit_profile_page"
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL')
+LOGOUT_REDIRECT_URL = config('LOGOUT_REDIRECT_URL')
+SEND_ACTIVATION_EMAIL = config('SEND_ACTIVATION_EMAIL', default=False, cast=bool)
+REGISTRATION_AUTO_LOGIN = config('REGISTRATION_AUTO_LOGIN', default=False, cast=bool)
+REGISTRATION_EMAIL_REGISTER_SUCESS_URL = config('REGISTRATION_EMAIL_REGISTER_SUCESS_URL')
+REGISTRATION_EMAIL_ACTIVATE_SUCESS_URL = CONFIG('REGISTRATION_EMAIL_ACTIVATE_SUCESS_URL')
 
 #MEDIA_URL = "/media/"
 #MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
+import datetime
 
-AWS_ACCESS_KEY_ID = 'AKIAIRRRKUMNVJFLQ4VQ'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'smithmayowa'
-AWS_S3_CUSTOM_DOMAIN = '{}s.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_FILE_EXPIRE = config('AWS_FILE_EXPIRE', cast=int)
+AWS_PRELOAD_METADATA = True
+AWS_QUERYSTRING_AUTH = True
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
@@ -185,6 +190,21 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'services/static'),
 ]
 STATIC_URL = 'https://{}/{}/'.format (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+MEDIA_URL = '//{}.s3.amazonaws.com/media/'.format(AWS_STORAGE_BUCKET_NAME)
+MEDIA_ROOT = MEDIA_URL
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+two_months = datetime.timedelta(days=61)
+date_two_months_later = datetime.date.today() + two_months
+expires = date_two_months_later.strftime("%A, %d %B %Y 20:00:00 GMT")
 
-DEFAULT_FILE_STORAGE = 'heroku_testing.storage_backends.MediaStorage'
+AWS_HEADERS = { 
+     'Expires': expires,
+     'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()), ),
+ }
+from storages.backends.s3boto3 import S3Boto3Storage
+
+class MediaStorage(S3Boto3Storage):
+    location = 'media'
+    file_overwrite = False
+	
+DEFAULT_FILE_STORAGE = 'MediaStorage'
