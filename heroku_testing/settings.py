@@ -168,7 +168,7 @@ LOGOUT_REDIRECT_URL = config('LOGOUT_REDIRECT_URL')
 SEND_ACTIVATION_EMAIL = config('SEND_ACTIVATION_EMAIL', default=False, cast=bool)
 REGISTRATION_AUTO_LOGIN = config('REGISTRATION_AUTO_LOGIN', default=False, cast=bool)
 REGISTRATION_EMAIL_REGISTER_SUCESS_URL = config('REGISTRATION_EMAIL_REGISTER_SUCESS_URL')
-REGISTRATION_EMAIL_ACTIVATE_SUCESS_URL = CONFIG('REGISTRATION_EMAIL_ACTIVATE_SUCESS_URL')
+REGISTRATION_EMAIL_ACTIVATE_SUCESS_URL = config('REGISTRATION_EMAIL_ACTIVATE_SUCESS_URL')
 
 #MEDIA_URL = "/media/"
 #MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
@@ -177,22 +177,19 @@ import datetime
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_FILE_EXPIRE = config('AWS_FILE_EXPIRE', cast=int)
-AWS_PRELOAD_METADATA = True
-AWS_QUERYSTRING_AUTH = True
+
 AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
-AWS_LOCATION = 'static'
 
+AWS_LOCATION = 'static'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'services/static'),
 ]
 STATIC_URL = 'https://{}/{}/'.format (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-MEDIA_URL = '//{}.s3.amazonaws.com/media/'.format(AWS_STORAGE_BUCKET_NAME)
-MEDIA_ROOT = MEDIA_URL
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 two_months = datetime.timedelta(days=61)
 date_two_months_later = datetime.date.today() + two_months
 expires = date_two_months_later.strftime("%A, %d %B %Y 20:00:00 GMT")
@@ -201,10 +198,6 @@ AWS_HEADERS = {
      'Expires': expires,
      'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()), ),
  }
-from storages.backends.s3boto3 import S3Boto3Storage
 
-class MediaStorage(S3Boto3Storage):
-    location = 'media'
-    file_overwrite = False
-	
-DEFAULT_FILE_STORAGE = 'MediaStorage'
+MEDIA_URL = '//{}.s3.amazonaws.com/media/'.format(AWS_STORAGE_BUCKET_NAME)
+DEFAULT_FILE_STORAGE = 'heroku_testing.store_backends.MediaStorage'

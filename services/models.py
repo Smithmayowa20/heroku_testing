@@ -5,7 +5,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-
+ 
 class User_Profile(models.Model):
 	slug = models.SlugField(unique=True)
 	short_bio = models.TextField(
@@ -32,6 +32,11 @@ class User_Profile(models.Model):
 	def follower(self,follower):
 		self.followers.add(follower)
 		
+	def unfollow(self,unfollow):
+		self.following.remove(unfollow)
+		
+	def unfollower(self,unfollower):
+		self.followers.remove(unfollower)
 
 		
 class Post(models.Model):
@@ -42,6 +47,14 @@ class Post(models.Model):
 	front_page = models.BooleanField(
 			default = False)
 	text = models.TextField(
+			blank=True,null=True)
+	image1 = models.ImageField(
+			blank=True,null=True)
+	image2 = models.ImageField(
+			blank=True,null=True)
+	image3 = models.ImageField(
+			blank=True,null=True)
+	file = models.FileField(
 			blank=True,null=True)
 	created_date = models.DateTimeField(
 			default=timezone.now)
@@ -58,41 +71,6 @@ class Post(models.Model):
 	def __str__(self):
 		return self.text
 		
-class File_upload(models.Model):
-	file = models.FileField(
-		blank=True,null=True)
-	post = models.ForeignKey(Post,
-		blank=True,null=True)
-		
-	def __str__(self):
-		return str(self.file)
-	
-class Image_upload1(models.Model):
-	image = models.ImageField(
-		blank=True,null=True)
-	post = models.ForeignKey(Post,
-		blank=True,null=True)
-		
-	def __str__(self):
-		return str(self.file)	
-
-class Image_upload2(models.Model):
-	image = models.ImageField(
-		blank=True,null=True)
-	post = models.ForeignKey(Post,
-		blank=True,null=True)
-		
-	def __str__(self):
-		return str(self.file)
-		
-class Image_upload3(models.Model):
-	image = models.ImageField(
-		blank=True,null=True)
-	post = models.ForeignKey(Post,
-		blank=True,null=True)
-		
-	def __str__(self):
-		return str(self.file)
 	
 class Comment(models.Model):
 	user = models.ForeignKey(User, blank=True, null=True)

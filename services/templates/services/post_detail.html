@@ -7,7 +7,13 @@
 <br>
 <hr class="intro-divider"/>
 <p><h3>{{ post.text|safe|linebreaksbr }}</h3></p>
-<p> {% for i in file %} {% if i.file %}<a href="{{ i.file.url }}"> {{i}} {% endif %}{% endfor %}</a></p>
+<hr class="intro-divider"/>
+<p>
+{% if post.image1 %}
+<img src="{{ post.image1.url }}" alt="{{ post.image1.name }}" class="img-thumbnail" width="450" height="450">
+{% endif %}
+</p>
+<p>{% if post.file %}<a href="{{ post.file.url }}"> {{post.file}} {% endif %}</a></p>
 </div>
 <div class="text-right">
 <hr class="intro-divider"/>

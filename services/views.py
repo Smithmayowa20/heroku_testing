@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
-from .models import Genre, Post, User_Profile, Comment, File_upload, Image_upload1, Image_upload2, Image_upload3
-from .forms import User_Profile_Form, CommentForm, PostForm, File_upload_Form, Image_upload1_Form, Image_upload2_Form, Image_upload3_Form
+from .models import Genre, Post, User_Profile, Comment
+from .forms import User_Profile_Form, CommentForm, PostForm
 from registration.forms import RegistrationFormUniqueEmail
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
@@ -9,9 +9,25 @@ from django.contrib.auth.models import User
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
-
+		
 @login_required
-def edit_profile_page(request):
+def profile_page_edit(request,slug):
+	profile = User_Profile.objects.get(slug=slug)
+	if profile.user != request.user:
+		raise Http404
+	if request.method == 'POST':
+		form = User_Profile_Form(request.POST,instance=profile)
+		if form.is_valid():
+			profile = form.save(commit=False)
+			profile.publish()
+			return redirect('profile_page')
+	else:
+		form = User_Profile_Form(instance=profile)	
+		return render(request,'services/profile_page_edit.html',{'profile':profile,'form':form})
+		
+		
+@login_required
+def create_profile_page(request):
 	form_class = User_Profile_Form
 	if request.method == 'POST':
         # grab the data from the submitted form and
@@ -31,7 +47,7 @@ def edit_profile_page(request):
 			return redirect('profile_page')
 	else:
 		form = form_class()
-		return(render(request,'services/edit_profile_page.html',{'form':form,}))
+		return(render(request,'services/create_profile_page.html',{'form':form,}))
 
 def get_picture(profile):
 	if profile.picture:
@@ -46,13 +62,15 @@ def profile_page(request,user=None):
 			try:
 				user1 = User.objects.get(username=user)
 				profile = User_Profile.objects.get(user=user1)
+				profile_followers = profile.followers.all()
 				image = get_picture(profile)
 				post_filter = (Post.objects.filter(user=user1))
 				post = post_filter[:10]
 				if post:
 					post_no = len(post_filter)
-			except:
-				profile = profile = User_Profile.objects.get(user=user)
+			except User.DoesNotExist:
+				profile = User_Profile.objects.get(user=user)
+				profile_followers = profile.followers.all()
 				image = get_picture(profile)
 				post_filter = (Post.objects.filter(user=user))
 				post = post_filter[:10]
@@ -60,15 +78,18 @@ def profile_page(request,user=None):
 					post_no = len(post_filter)
 		else:
 			profile = User_Profile.objects.get(user=request.user)
+			profile_followers = profile.followers.all()
 			image = get_picture(profile)
 			post_filter = (Post.objects.filter(user=request.user))
 			post = post_filter[:10]
 			if post:
 				post_no = len(post_filter)
-		return (render(request,'services/profile_page.html',{'profile':profile,'image':image,'post':post,'post_no':post_no}))
-	except:
+		return (render(request,'services/profile_page.html',{
+		'profile':profile,'image':image,'post':post,'post_no':post_no,'profile_followers':profile_followers
+		}))
+	except User_Profile.DoesNotExist:
 		if (user) and (user==request.user.username):
-			return redirect('edit_profile_page')
+			return redirect('create_profile_page')
 		else:
 			return redirect('landing_page')
 			
@@ -76,8 +97,8 @@ def profile_page(request,user=None):
 def user_feed(request):
 	try:
 		user = User_Profile.objects.get(user=request.user)
-	except:
-		return redirect('edit_profile_page')
+	except User_Profile.DoesNotExist:
+		return redirect('create_profile_page')
 	following_users = user.following.all()
 	following_post = Post.objects.filter(user__in=following_users)
 	category = Genre.objects.all()
@@ -153,22 +174,25 @@ def follow(request,user1):
 	person_profile.follower(request_profile.user)
 	return redirect('profile_page2',user=person_profile.user)
 
+	
+@login_required
+def unfollow(request,user1):
+	request_profile = User_Profile.objects.get(user=request.user)
+	user_profile = User.objects.get(username=user1)
+	person_profile = User_Profile.objects.get(user=user_profile)
+	request_profile.unfollow(person_profile.user)
+	person_profile.unfollower(request_profile.user)
+	return redirect('profile_page2',user=person_profile.user)
+	
+	
 @login_required	
 def new_post(request,category):
 	form_class = PostForm
-	file_class1 = File_upload_Form
-	Image_class1 = Image_upload1_Form
-	Image_class2 = Image_upload2_Form
-	Image_class3 = Image_upload3_Form
     # if we're coming from a submitted form, do this
 	if request.method == 'POST':
         # grab the data from the submitted form and
         # apply to the form
-		form = form_class(request.POST)
-		file1 = file_class1(request.POST,request.FILES)
-		Image1 = Image_class1(request.POST,request.FILES)
-		Image2 = Image_class2(request.POST,request.FILES)
-		Image3 = Image_class3(request.POST,request.FILES)
+		form = form_class(request.POST,request.FILES)
 		if form.is_valid():
             # create an instance but don't save yet
 			thing = form.save(commit=False)
@@ -180,55 +204,24 @@ def new_post(request,category):
 			thing.front_page = True
 			user_profile = User_Profile.objects.get(user=request.user)
 			thing.user_profile = user_profile
-			thing.publish()
-			
-			if file1.is_valid():
-				newdoc1 = file1.save(commit=False)
-				newdoc1.post = thing
-				newdoc1.save()
-				
-			if Image1.is_valid():
-				newdoc2 = file1.save(commit=False)
-				newdoc2.post = thing
-				newdoc2.save()
-				
-			if Image2.is_valid():
-				newdoc3 = file1.save(commit=False)
-				newdoc3.post = thing
-				newdoc3.save()
-				
-			if Image3.is_valid():
-				newdoc4 = file1.save(commit=False)
-				newdoc4.post = thing
-				newdoc4.save()
-				
             # save the object
-			
-
+			thing.publish()
             # redirect to our newly created thing
 			return redirect('post_detail',pk=thing.pk)
 
     # otherwise just create the form
 	else:
 		form = form_class()
-		file1 = file_class1()
-		Image1 = Image_class1()
-		Image2 = Image_class2()
-		Image3 = Image_class3()
-	return render(request,'services/new_post.html', {
-		'form': form, 'file1': file1, 'Image1': Image1, 'Image2': Image2, 'Image3': Image3
-	})
+	return render(request,'services/new_post.html', {'form': form,})
 
 @login_required
 def post_detail(request,pk):
 	recent_post = (Post.objects.all().order_by('-published_date'))[0:5]
 	post = get_object_or_404(Post, pk=pk)
-	file = File_upload.objects.filter(post = post)
-	image = Image_upload1.objects.filter(post = post)
 	form = new_comment1(request,post)
 	comm = Comment.objects.filter(post=post,position=1)
 	comment = c.commen(comm,post)
-	return (render(request,'services/post_detail.html',{'post':post,'comment':comment,'form':form,'recent':recent_post,'file':image}))
+	return (render(request,'services/post_detail.html',{'post':post,'comment':comment,'form':form,'recent':recent_post,}))
 	
 @login_required		 
 def new_comment(request,pk,position=0,parent_no=None):

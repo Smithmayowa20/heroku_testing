@@ -4,9 +4,11 @@ from django.views.generic import (TemplateView,
     RedirectView,
 )
 from django.conf import settings
-urlpatterns = [url(r'^profile/edit/$',views.edit_profile_page,name='edit_profile_page'),
+urlpatterns = [url(r'^profile/create/$',views.create_profile_page,name='create_profile_page'),
+url(r'^profile/edit/(?P<slug>[-\w]+)/$',views.profile_page_edit,name='profile_page_edit'),
 url(r'^new/post/(?P<category>[-\w]+)/$',views.new_post, name='new_post'),
 url(r'^follow/(?P<user1>[-\w]+)$',views.follow,name='follow'),
+url(r'^unfollow/(?P<user1>[-\w]+)$',views.unfollow,name='unfollow'),
 url(r'^detail/post/(?P<pk>\d+)$',views.post_detail,name='post_detail'),
 url(r'^post/new-comment/(?P<slug>[-\w]+)/$', views.new_comment1, name='new_comment1'),
 url(r'^post/new-comment/(?P<pk>\d+)/(?P<position>\d+)/(?P<parent_no>\d+)/$', views.new_comment, name='new_comment'),

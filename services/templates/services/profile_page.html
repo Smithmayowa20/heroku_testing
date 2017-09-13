@@ -1,31 +1,55 @@
-{% extends 'services/base.html' %}
-{% block content %}
-		<br/>
+{% extends 'services/base.html' %} 
+{% load static from staticfiles %}
+{% block header %}
+<br/>
 		<br/>
 		<br/>
 		<div class="text-center">
 		<div style="background-color:aqua">
+		<br/>
+		<h4>{{ profile.user|upper }}'S PROFILE PAGE <br/><br/>
+		
+		</div>
+		<br/>
 		{% if image %}
 		<p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="450" height="450"></p>
 		{% else %}
-		<img src="" alt="" class="img-thumbnail" width="450" height="450">
+		<img src="{% static 'services/img/mohamed_y.jpg' %}" alt="" class="img-thumbnail" width="450" height="450">
 		{% endif %}
-		<h4>Username:</h4> {{ profile.user|upper }} <br/>
+		
 		<br/>
 		<br/> 
 		{% if user.is_authenticated %}
 			{% if user != profile.user %}
-		<a href="{% url 'follow' user1=profile.user %}"> <span class="btn btn-info"> Follow-{{profile.user}} </span></a><br/><br/>
+				{% if user in profile_followers %}
+				<a href="{% url 'unfollow' user1=profile.user %}">
+					<span class="btn btn-info">
+						Unfollow - {{profile.user|title}} 
+					</span>
+				</a>
+				<br/><br/>
+				{% else %}
+				<a href="{% url 'follow' user1=profile.user %}">
+					<span class="btn btn-info">
+						Follow - {{profile.user|title}} 
+					</span>
+				</a>
+				<br/><br/>
+				{% endif %}
 			{% endif %}
 		{% endif %}
 		</div>
+{% endblock header %}
+{% block content %}
+		
+		<div class="text-center">
 		<br/>
 		<br/>
 		<p><h4>Short Bio:</h4> {{ profile.short_bio }} </p>
 		<br/>
 		<br/>
 		<br/>
-		<h4> {{profile.user|upper}} POSTS  </h4>
+		<h4> <div class="btn btn-block btn-success">{{profile.user|upper}} POSTS</div>  </h4>
 		<hr class="divider">
 		</div>
 		<div>

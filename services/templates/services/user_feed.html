@@ -1,4 +1,7 @@
 {% extends 'services/base.html' %}
+{% load static from staticfiles %}
+
+
        {% block title %} {{block.super}} {% endblock title %}
 	   {% block aside %}
 	   <h5>Your Followers:
@@ -14,9 +17,9 @@
 		<h1>
 		<div class="text-left">
 			{% if profile.picture %}
-	   <p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="40" height="40"></p>
+	   <p><h6><a href=""><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="60" height="60"></a></h6></p>
 	   {% else %}
-	   <p><img src="" alt="" class="img-thumbnail" width="40" height="40"></p>
+	   <p><h6><a href=""><img src="{% static 'services/img/mohamed_y.jpg' %}" alt="upload your picture" class="img-circle" width="60" height="60"></a></h6></p>
 	   {% endif %}
 	   </div>
 			Your Feed 
@@ -24,20 +27,22 @@
 		</h1> 	
 			<div class="col-md-6 col-xs-6" style="background-color:aqua;">
 			<h5>
-				Create new post :
+				Create New Post In:
 				<h6>
 				categories: {% for i in category %}
 				<a href="{% url 'new_post' category=i.category %}">{{i.category}}</a> |
 				{% endfor %}
+				<a href="">Others</a>
 				</h6>
 			</h5>
 			</div>
 			<div class="col-md-6 col-xs-6" style="background-color:aqua;">
 			<h5>
-				Filter by :
+				Filter Post By :
 				<h6>
-					<a href="">(categories)</a>
-					<a href="">(popular posts)</a>
+					<a href="">categories</a> |
+					<a href="">popularity</a> |
+					<a href="">no of comments</a>
 				</h6>
 			</h5>
 			</div>
@@ -47,10 +52,16 @@
 	{% endblock header %}
 	{% block content %}
 	 <br>
+	 <br>
 	 {% if promoted_post %}
 	   {% for i in promoted_post %} 
 	   <div class="">
 	   <div class="row">
+	   <div class="text-center">
+	   {% if i.image1 %}
+<img src="{{ i.image1.url }}" alt="{{ i.image1.name }}" class="img-thumbnail" width="450" height="450">
+		{% endif %}
+		</div>
 	   <div class="col-md-12 col-xs-12"><p><h5>{{ i.text|safe|linebreaksbr }}</h5></p>
 	   <h6><div class="text-right">{{i.published_date}}</div></h6>
 	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right"> {{i.user}}</div></h6></a>
@@ -63,6 +74,9 @@
 	   {% for i in post %}
 	   <div class="">
 	   <div class="row">
+	   {% if i.image1 %}
+<img src="{{ i.image1.url }}" alt="{{ i.image1.name }}" class="img-thumbnail" width="450" height="450">
+{% endif %}
 	   <div class="col-md-12 col-xs-12"><p><h5>{{ i.text|safe|linebreaksbr }}</h5></p>
 	   <h6><div class="text-right">{{i.published_date}}</div></h6>
 	   <a href="{% url 'profile_page2' user=i.user %}"> <h6><div class="text-right"> {{i.user}}</div></h6></a>
