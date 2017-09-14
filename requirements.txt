@@ -9,3 +9,4 @@ whitenoise==3.2.2
 boto3
 django-storages
 python-decouple
+pillow
