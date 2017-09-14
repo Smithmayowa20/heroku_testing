@@ -158,11 +158,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ACCOUNT_ACTIVATION_DAYS = config('ACCOUNT_ACTIVATION_DAYS', cast=int)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST = 'smtp.gmail.com'
+
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
 LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL')
 LOGOUT_REDIRECT_URL = config('LOGOUT_REDIRECT_URL')
 SEND_ACTIVATION_EMAIL = config('SEND_ACTIVATION_EMAIL', default=False, cast=bool)
