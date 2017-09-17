@@ -15,17 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from registration.backends.default.views import RegistrationView
+from registration.backends.simple.views import RegistrationView
 from registration.forms import RegistrationFormUniqueEmail
 from django.conf.urls.static import static
 from django.conf import settings
+
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        # the named URL that we want to redirect to after
+        # successful registration
+        return ('user_feed')
 
 app_name = 'services'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^summernote/',include('django_summernote.urls')),
-	url(r'^accounts/register/$', RegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
-	url(r'^accounts/', include('registration.backends.default.urls')),
+	url(r'^accounts/register/$', MyRegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
+	url(r'^accounts/', include('registration.backends.simple.urls')),
 	url(r'', include('services.urls')),
 ]
 if settings.DEBUG:

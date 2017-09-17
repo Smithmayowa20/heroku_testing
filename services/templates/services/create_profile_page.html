@@ -7,7 +7,9 @@
 <div class="bg-faded p-4 my-4">
             <h2 class="text-center text-lg text-uppercase my-0"> <strong>CREATE PROFILE</strong></h2>
             <hr class="divider">
+			<div class="col-md-4"></div>
 			<div class="text-center">
+			<div class="col-md-4">
 			<form method="POST" class="post-form">
 				{% csrf_token %}
 				{% for field in form %}
@@ -24,8 +26,10 @@
 				{% endfor %}
 			
 			<button type="submit" class="save btn btn-default">Submit</button>
+			<hr class="divider">
+			</div>
+			<div class="col-md-4"></div>
 			</form>
-			            <hr class="divider">
 </div>
 </div>
 </div>
