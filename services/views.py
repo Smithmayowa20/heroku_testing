@@ -66,24 +66,21 @@ def profile_page(request,user=None):
 				image = get_picture(profile)
 				post_filter = (Post.objects.filter(user=user1))
 				post = post_filter[:10]
-				if post:
-					post_no = len(post_filter) if len(post_filter) else 0
+				post_no = len(post_filter) if len(post_filter) else 0
 			except User.DoesNotExist:
 				profile = User_Profile.objects.get(user=user)
 				profile_followers = profile.followers.all()
 				image = get_picture(profile)
 				post_filter = (Post.objects.filter(user=user))
 				post = post_filter[:10]
-				if post:
-					post_no = len(post_filter) if len(post_filter) else 0
+				post_no = len(post_filter) if len(post_filter) else 0
 		else:
 			profile = User_Profile.objects.get(user=request.user)
 			profile_followers = profile.followers.all()
 			image = get_picture(profile)
 			post_filter = (Post.objects.filter(user=request.user))
 			post = post_filter[:10]
-			if post:
-				post_no = len(post_filter) if len(post_filter) else 0
+			post_no = len(post_filter) if len(post_filter) else 0
 		return (render(request,'services/profile_page.html',{
 		'profile':profile,'image':image,'post':post,'post_no':post_no,'profile_followers':profile_followers
 		}))
