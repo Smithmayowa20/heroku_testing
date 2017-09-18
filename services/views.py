@@ -98,12 +98,12 @@ def user_feed(request):
 		return redirect('create_profile_page')
 	following_users = user.following.all()
 	following_post = Post.objects.filter(user__in=following_users)
-	category = Genre.objects.all()
+	category_snippet = Genre.objects.all()[:4]
 	promoted_post = (Post.objects.filter(front_page = True).order_by('-published_date'))[:5]
 	user_follower = user.followers.all()
 	user_following = user.following.all()
 	context = {'post':following_post, 'promoted_post':promoted_post,
-	'category':category, 'profile':user, 'user_follower':user_follower,
+	'category':category_snippet, 'profile':user, 'user_follower':user_follower,
 	'user_following':user_following}
 	return (render(request,'services/user_feed.html',context))
 
@@ -198,7 +198,7 @@ def new_post(request,category):
 			thing.user = request.user
 			genre = Genre.objects.get(category = category)
 			thing.genre = genre
-			thing.front_page = True
+			thing.front_page = False
 			user_profile = User_Profile.objects.get(user=request.user)
 			thing.user_profile = user_profile
             # save the object

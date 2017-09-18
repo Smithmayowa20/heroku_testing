@@ -28,5 +28,5 @@ class CommentForm(ModelForm):
 class User_Profile_Form(ModelForm):
 	class Meta:
 		model = User_Profile
-		fields = ('short_bio','picture','link')
+		fields = ('surname','name','middlename','short_bio','profile_picture','link')
 		

@@ -17,7 +17,7 @@ class CommentAdmin(admin.ModelAdmin):
 	
 class User_ProfileAdmin(admin.ModelAdmin):
 	model = User_Profile
-	list_display = ('user','picture','link','short_bio')
+	list_display = ('surname','name','middlename','user','profile_picture','link','short_bio')
 	prepopulated_fields = {'slug': ('user',),}
 	
 class GenreAdmin(admin.ModelAdmin):

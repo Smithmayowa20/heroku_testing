@@ -17,9 +17,9 @@
 		<h1>
 		<div class="text-left">
 			{% if profile.picture %}
-	   <p><h6><a href=""><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="50" height="50"></a></h6></p>
+	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="50" height="50"></a></h6></p>
 	   {% else %}
-	   <p><h6><a href=""><img src="{% static 'services/img/mohamed_y.jpg' %}" alt="upload your picture" class="img-circle" width="50" height="50"></a></h6></p>
+	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"><img src="{% static 'services/img/mohamed_y.jpg' %}" alt="upload your picture" class="img-circle" width="50" height="50"></a></h6></p>
 	   {% endif %}
 	   </div>
 			Your Feed 

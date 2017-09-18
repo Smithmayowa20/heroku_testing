@@ -5,9 +5,11 @@
 <br>
 <div class="container">
 <div class="bg-faded p-4 my-4">
-            <h2 class="text-center text-lg text-uppercase my-0"> <strong>EDIT PROFILE</strong></h2>
+            <h2 class="text-center text-lg text-uppercase my-0"> <strong>PROFILE PAGE EDIT</strong></h2>
             <hr class="divider">
-			<div class="text-center">
+			<div class="col-md-3"></div>
+			<div class="">
+			<div class="col-md-6">
 			<form method="POST" class="post-form">
 				{% csrf_token %}
 				{% for field in form %}
@@ -24,9 +26,11 @@
 				{% endfor %}
 			
 			<button type="submit" class="save btn btn-default">Submit</button>
+			<hr class="divider">
+			</div>
+			<div class="col-md-3"></div>
 			</form>
-			            <hr class="divider">
 </div>
 </div>
 </div>
-{% endblock header %}
+{% endblock header%}

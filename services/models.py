@@ -7,10 +7,16 @@ from django.contrib.auth.models import User
 
  
 class User_Profile(models.Model):
+	surname = models.CharField(max_length = 32,
+			blank=True,null=True)
+	name = models.CharField(max_length = 32,
+			blank=True,null=True)
+	middlename = models.CharField(max_length = 32,
+			blank=True,null=True)
 	slug = models.SlugField(unique=True)
 	short_bio = models.TextField(
 			blank=True, null=True)
-	picture = models.ImageField("Image", upload_to="images/",
+	profile_picture = models.ImageField( upload_to="images/",
 			blank=True, null=True)
 	user = models.OneToOneField(User, blank=True, null=True)
 	link = models.Url = models.URLField(
