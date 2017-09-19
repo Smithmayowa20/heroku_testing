@@ -7,7 +7,7 @@ from .models import Post, Comment, User_Profile, Genre
 
 class PostAdmin(admin.ModelAdmin):
     model = Post
-    list_display = ( 'published_date','user','genre','text','image1','image2','image3','file')
+    list_display = ( 'published_date','user','genre','tag_users','text','image1','image2','image3','file')
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -17,7 +17,7 @@ class CommentAdmin(admin.ModelAdmin):
 	
 class User_ProfileAdmin(admin.ModelAdmin):
 	model = User_Profile
-	list_display = ('surname','name','middlename','user','profile_picture','link','short_bio')
+	list_display = ('surname','name','middlename','user','profile_picture','link','short_bio',)
 	prepopulated_fields = {'slug': ('user',),}
 	
 class GenreAdmin(admin.ModelAdmin):

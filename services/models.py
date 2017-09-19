@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # Create your models here.
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -52,6 +51,12 @@ class Post(models.Model):
 			blank=True, null=True)
 	front_page = models.BooleanField(
 			default = False)
+	tag_users = models.CharField(max_length=250,
+			blank=True,null=True,
+			help_text='''tag single or several users with @username followed by space 
+			\n e.g @tanya340 @mark for several users\n and @tanya for single user''')
+	user_tags = models.ManyToManyField(User,
+			blank=True, related_name="user_tags")
 	text = models.TextField(
 			blank=True,null=True)
 	image1 = models.ImageField(
@@ -74,6 +79,16 @@ class Post(models.Model):
 		self.published_date = timezone.now()
 		self.save()
 
+	def tag(self):
+		lis = []
+		if self.tag_users:
+			t = self.tag_users.split()
+			for i in t:
+				if '@' in i:
+					lis.append(i[1:])
+		r = User.objects.filter(username__in=lis)
+		self.user_tags.add(*r)
+		
 	def __str__(self):
 		return self.text
 		

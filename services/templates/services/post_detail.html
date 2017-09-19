@@ -1,14 +1,16 @@
 {% extends 'services/base.html' %}
        {% block title %} {{block.super}} {% endblock title %}
 {% block content %}
-<div class="">
 <br/>
 <br>
 <br>
 <hr class="intro-divider"/>
-<p><h3>{{ post.text|safe|linebreaksbr }}</h3></p>
+<p><h3>{% for i in tagged_users %}
+	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
+	{% endfor %}
+{{ post.text|safe|linebreaksbr }}</h3></p>
 <hr class="intro-divider"/>
-<p>
+<div class="text-center">
 {% if post.image1 %}
 <img src="{{ post.image1.url }}" alt="{{ post.image1.name }}" class="img-thumbnail" width="450" height="450">
 {% endif %}
@@ -40,6 +42,7 @@
 <p>
 <a href="{% url 'new_comment' pk=post.pk position=comment_.position parent_no=comment_.pk%}" class="top-menu"><span class="btn btn-default">reply</span></a>
 </p>
+</div>
 <hr class="intro-divider"/>
 {% endfor %}
 {% endblock content %}

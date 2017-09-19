@@ -13,7 +13,7 @@ class RegistroperfilForm(RegistrationFormUniqueEmail):
 class PostForm(ModelForm):
 	class Meta:
 		model = Post
-		fields = ('text','image1','image2','image3','file')
+		fields = ('tag_users','text','image1','image2','image3','file')
 
 			
 class CommentForm(ModelForm):

@@ -50,7 +50,7 @@ def create_profile_page(request):
 		return(render(request,'services/create_profile_page.html',{'form':form,}))
 
 def get_picture(profile):
-	if profile.picture:
+	if profile.profile_picture:
 		image = True
 	else:
 		image = False
@@ -203,6 +203,7 @@ def new_post(request,category):
 			thing.user_profile = user_profile
             # save the object
 			thing.publish()
+			thing.tag()
             # redirect to our newly created thing
 			return redirect('post_detail',pk=thing.pk)
 
@@ -213,12 +214,13 @@ def new_post(request,category):
 
 @login_required
 def post_detail(request,pk):
-	recent_post = (Post.objects.all().order_by('-published_date'))[0:5]
+	#recent_post = (Post.objects.all().order_by('-published_date'))[0:5]
 	post = get_object_or_404(Post, pk=pk)
 	form = new_comment1(request,post)
 	comm = Comment.objects.filter(post=post,position=1)
 	comment = c.commen(comm,post)
-	return (render(request,'services/post_detail.html',{'post':post,'comment':comment,'form':form,'recent':recent_post,}))
+	return (render(request,'services/post_detail.html',
+	{'post':post,'comment':comment,'form':form,'tagged_users':post.user_tags.all()}))
 	
 @login_required		 
 def new_comment(request,pk,position=0,parent_no=None):
