@@ -49,6 +49,16 @@ def create_profile_page(request):
 		form = form_class()
 		return(render(request,'services/create_profile_page.html',{'form':form,}))
 
+def genre_follow(request,category):
+	genre = Genre.objects.get(category=category)
+	genre.add_follower(request.user)
+	return redirect('all_categories')
+		
+def genre_unfollow(request,category):
+	genre = Genre.objects.get(category=category)
+	genre.remove_follower(request.user)
+	return redirect('all_categories')
+	
 def get_picture(profile):
 	if profile.profile_picture:
 		image = True
@@ -128,7 +138,12 @@ def landing_page(request):
 			return redirect('user_feed')'''
 	else:
 		return (render(request,'services/landing_page22.html'))
-		
+	
+@login_required	
+def all_categories(request):
+	genre = Genre.objects.all()
+	return (render(request,'services/all_categories.html',{'genre':genre}))
+	
 @login_required	
 def genre_category(request,category):
 	genre = Genre.objects.get(category=category)
@@ -146,6 +161,8 @@ def genre_category(request,category):
         # If page is out of range (e.g. 9999), deliver last page of results.
 		post_2 = paginator.page(paginator.num_pages)
 	return (render(request,'services/genre_category.html',{'post':post,'post_2':post_2,'category':c}))
+
+	
 
 class c:
 	lis = []

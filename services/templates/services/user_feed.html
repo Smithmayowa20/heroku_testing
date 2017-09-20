@@ -5,9 +5,18 @@
        {% block title %} {{block.super}} {% endblock title %}
 	   {% block aside %}
 	   <h5>Your Followers:
-	   {% for i in user_follower %} {{i}} {% endfor %}</h5>
+	   {% for i in user_follower %} <a href="{% url 'profile_page2' user=i %}">{{i}}</a>{% endfor %}</h5>
 	   <h5>People You Follow:
-	   {% for i in user_following %} {{i}} {% endfor %}</h5>
+	   {% for i in user_following %}<a href="{% url 'profile_page2' user=i %}"> {{i}}</a> {% endfor %}</h5>
+	   <h5>
+				Filter Post By :
+				<h6>
+					<a href="">categories</a> |
+					<a href="">popularity</a> |
+					<a href="">no of comments</a> |
+					<a href="">most likes</a>
+				</h6>
+			</h5>
 	   {% endblock aside %}
 	   {% block header %}
 	   <br>
@@ -25,28 +34,19 @@
 				Your Feed 
 			<hr class="intro-divider"/> 
 		</h1> 	
-			<div class="col-md-6 col-xs-6" style="background-color:aqua;">
 			<h5>
-				Vaunt Your Talent:
+				Create A Post And Vaunt Your Talent In These Categories:
 				<h6>
-				categories: {% for i in category %}
+				 {% for i in category %}
 				<a href="{% url 'new_post' category=i.category %}">{{i.category}}</a> |
 				{% endfor %}
-				<a href="">Others</a>
+				<a href="{% url 'all_categories' %}">Others</a>
 				</h6>
 			</h5>
-			</div>
-			<div class="col-md-6 col-xs-6" style="background-color:aqua;">
-			<h5>
-				Filter Post By :
-				<h6>
-					<a href="">categories</a> |
-					<a href="">popularity</a> |
-					<a href="">no of comments</a> |
-					<a href="">most likes</a>
-				</h6>
-			</h5>
-			</div>
+
+
+			
+
 			<hr class="intro-divider"/>
 		</div>
 </div>

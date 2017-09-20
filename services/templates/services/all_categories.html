@@ -1,0 +1,43 @@
+{% extends 'services/base.html' %}
+{% block header %}
+<br>
+<br>
+<br>
+<div class="container">
+<div class="bg-faded p-4 my-4">
+	<div style="background-color:aqua;">
+<br>
+<div class="text-center">
+<h2 class="text-center text-lg text-uppercase my-0"> <strong>Choose Post Talent Category</strong></h2>
+<hr class="intro-divider"/>
+</div>
+</div>
+<div class="text-center">
+{% for i in genre %}
+<div class="col-xs-3 col-md-3">
+<p>
+<a href="{% url 'new_post' category=i.category %}">{{i.category}}</a>
+<br>
+{{i.about}}
+<br>
+{% if request.user in i.follower_list %}
+<a href="{% url 'genre_unfollow' category=i.category %}">
+					<span class="btn btn-info">
+						Unfollow  
+					</span>
+				</a>
+				{% else %}
+				<a href="{% url 'genre_follow' category=i.category %}">
+					<span class="btn btn-info">
+						Follow 
+					</span>
+				</a>
+			{% endif %}
+</p>
+<br>
+</div>
+{% endfor %}
+</div>
+</div>
+</div>
+{% endblock header %}

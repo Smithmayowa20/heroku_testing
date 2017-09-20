@@ -1,10 +1,22 @@
 {% extends 'services/base.html' %}
        {% block title %} {{block.super}} {% endblock title %}
-{% block content %}
+
+{% block header %}
 <br/>
 <br>
 <br>
+<div style="background-color:aqua;">
+<br>
+<div class="text-center">
+<h1>Post Detail</h1>
 <hr class="intro-divider"/>
+</div>
+		<br>
+</div> 
+{% endblock header %}	   
+
+{% block content %}
+
 <p><h3>{% for i in tagged_users %}
 	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
 	{% endfor %}
