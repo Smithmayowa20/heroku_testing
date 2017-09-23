@@ -8,15 +8,6 @@
 	   {% for i in user_follower %} <a href="{% url 'profile_page2' user=i %}">{{i}}</a>{% endfor %}</h5>
 	   <h5>People You Follow:
 	   {% for i in user_following %}<a href="{% url 'profile_page2' user=i %}"> {{i}}</a> {% endfor %}</h5>
-	   <h5>
-				Filter Post By :
-				<h6>
-					<a href="">categories</a> |
-					<a href="">popularity</a> |
-					<a href="">no of comments</a> |
-					<a href="">most likes</a>
-				</h6>
-			</h5>
 	   {% endblock aside %}
 	   {% block header %}
 	   <br>
@@ -25,8 +16,8 @@
 		 <br>
 		<h1>
 		<div class="text-left">
-			{% if profile.picture %}
-	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="50" height="50"></a></h6></p>
+			{% if profile.profile_picture %}
+	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"> <img src="{{ profile.profile_picture.url }}" alt="{{ profile.profile_picture.name }}" class="img-circle" width="80" height="80"></a></h6></p>
 	   {% else %}
 	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"><img src="{% static 'services/img/mohamed_y.jpg' %}" alt="upload your picture" class="img-circle" width="50" height="50"></a></h6></p>
 	   {% endif %}
@@ -35,18 +26,30 @@
 			<hr class="intro-divider"/> 
 		</h1> 	
 			<h5>
-				Create A Post And Vaunt Your Talent In These Categories:
-				<h6>
-				 {% for i in category %}
-				<a href="{% url 'new_post' category=i.category %}">{{i.category}}</a> |
-				{% endfor %}
-				<a href="{% url 'all_categories' %}">Others</a>
-				</h6>
+				<a data-toggle="collapse" data-target="#demo1">Create A New Post In A Talent Category
+				<span class="glyphicon glyphicon-chevron-down"></span></a> 
 			</h5>
-
-
+				<div id="demo1" class="collapse">
+					<h6>
+					{% for i in category %}
+					<a href="{% url 'new_post' category=i.category %}">{{i.category}}</a> |
+					{% endfor %}
+					</h6>
+				</div>
 			
 
+			<h5>
+				<a data-toggle="collapse" data-target="#demo">Filter Post By
+				<span class="glyphicon glyphicon-chevron-down"></span></a>
+			</h5>
+				<div id="demo" class="collapse">
+					<h6>
+						<a href="">categories</a> |
+						<a href="">popularity</a> |
+						<a href="">no of comments</a> |
+						<a href="">most likes</a>
+					</h6>
+				</div> 
 			<hr class="intro-divider"/>
 		</div>
 </div>

@@ -12,7 +12,7 @@
 		</div>
 		<br/>
 		{% if image %}
-		<p><img src="{{ profile.picture.url }}" alt="{{ profile.picture.name }}" class="img-thumbnail" width="450" height="450"></p>
+		<p><img src="{{ profile.profile_picture.url }}" alt="{{ profile.profile_picture.name }}" class="img-thumbnail" width="450" height="450"></p>
 		{% else %}
 		<img src="{% static 'services/img/mohamed_y.jpg' %}" alt="" class="img-thumbnail" width="450" height="450">
 		{% endif %}

@@ -1,25 +1,39 @@
 {% extends 'services/base.html' %}
        {% block title %} {{block.super}} {% endblock title %}
-	   
-    {% block content %}
-	<div class="text-center"> <h2> FRONT-PAGE POSTS FROM OUR {{category|upper}} SECTION </h2> </div>
-	
-	<div class="container content text-center"><h2><a href="{% url 'new_post' category=category %}"> Create new {{category|title}}-post</a></h2></div>
-	<br/><br/>
-	{% for i in post %}
-	<div class="col-sm-12"><p><h3>{{ i.text|safe }}</h3></p>
-	<a href="{% url 'profile_page2' user=i.user %}"> <h3><div class="text-right"> {{i.user}}</div></h3></a>
-	<h4><div class="text-right">{{i.published_date}}</div></h4>
-	<pre>BOOSTED POST</pre>
-	<a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div><br/><br/>
-	{% endfor %}
-	{% for i in post_2 %}
-	<div class="col-sm-12"><p><h3>{{ i.text|safe }}</h3></p>
-	<a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div><br>
-	<a href="{% url 'profile_page2' user=i.user %}"> <h3><div class="text-right"> {{i.user}}</div></h3></a>
-	<h4><div class="text-right">{{i.published_date}}</div></h4>
-	{% endfor %}
-	{% endblock content %}
+	{% block header %}
+<br>
+<br>
+<br>
+<div class="container">
+<div class="bg-faded p-4 my-4">
+	<div style="background-color:aqua;">
+<br>
+<div class="text-center">
+<h2 class="text-center text-lg text-uppercase my-0"> <strong>{{category|upper}} Category</strong></h2>
+<hr class="intro-divider"/>
+</div>
+</div>
+</div>
+<div class="container content text-center"><h4><a href="{% url 'new_post' category=category %}"> 
+Create new {{category|title}}-post</a></h4></div>
+<br/><br/>
+{% for i in post %}
+<div class="col-sm-12"><p><h3>{{ i.text|safe }}</h3></p>
+<a href="{% url 'profile_page2' user=i.user %}"> <h3><div class="text-right"> {{i.user}}</div></h3></a>
+<h4><div class="text-right">{{i.published_date}}</div></h4>
+<pre>BOOSTED POST</pre>
+<a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div><br/><br/>
+{% endfor %}
+{% for i in post_2 %}
+<div class="col-sm-12"><p><h3>{{ i.text|safe }}</h3></p>
+<a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div><br>
+<a href="{% url 'profile_page2' user=i.user %}"> <h3><div class="text-right"> {{i.user}}</div></h3></a>
+<h4><div class="text-right">{{i.published_date}}</div></h4>
+{% endfor %}
+<br>
+<br>
+</div>
+{% endblock header %}
 	
 	
 	

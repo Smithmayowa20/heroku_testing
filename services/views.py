@@ -16,7 +16,7 @@ def profile_page_edit(request,slug):
 	if profile.user != request.user:
 		raise Http404
 	if request.method == 'POST':
-		form = User_Profile_Form(request.POST,instance=profile)
+		form = User_Profile_Form(request.POST,request.FILES,instance=profile)
 		if form.is_valid():
 			profile = form.save(commit=False)
 			profile.publish()
@@ -61,9 +61,9 @@ def genre_unfollow(request,category):
 	
 def get_picture(profile):
 	if profile.profile_picture:
-		image = True
+		return True
 	else:
-		image = False
+		return False
 		
 @login_required
 def profile_page(request,user=None):
@@ -108,7 +108,7 @@ def user_feed(request):
 		return redirect('create_profile_page')
 	following_users = user.following.all()
 	following_post = Post.objects.filter(user__in=following_users)
-	category_snippet = Genre.objects.all()[:4]
+	category_snippet = Genre.objects.all()
 	promoted_post = (Post.objects.filter(front_page = True).order_by('-published_date'))[:5]
 	user_follower = user.followers.all()
 	user_following = user.following.all()
