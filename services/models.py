@@ -15,7 +15,7 @@ class User_Profile(models.Model):
 	slug = models.SlugField(unique=True)
 	short_bio = models.TextField(
 			blank=True, null=True)
-	profile_picture = models.ImageField( upload_to="images/",
+	profile_picture = models.ImageField(
 			blank=True, null=True)
 	user = models.OneToOneField(User, blank=True, null=True)
 	link = models.Url = models.URLField(

@@ -18,4 +18,5 @@ url(r'^profile/$',views.profile_page,name='profile_page'),
 url(r'^profile/(?P<user>[-\w]+)$',views.profile_page,name='profile_page2'),
 url(r'^$',views.landing_page,name='landing_page'),
 url(r'^home/$',views.user_feed,name='user_feed'),
-url(r'^category/$',views.all_categories,name="all_categories"),]
+url(r'^category/$',views.all_categories,name="all_categories"),
+url(r'^category/(?P<category>[-\w]+)/$',views.genre_category,name="genre_category"),]

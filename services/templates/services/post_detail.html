@@ -23,16 +23,24 @@
 {{ post.text|safe|linebreaksbr }}</h3></p>
 <hr class="intro-divider"/>
 <div class="text-center">
+<p>
 {% if post.image1 %}
 <img src="{{ post.image1.url }}" alt="{{ post.image1.name }}" class="img-thumbnail" width="450" height="450">
+{% endif %}
+{% if post.image2 %}
+<img src="{{ post.image2.url }}" alt="{{ post.image2.name }}" class="img-thumbnail" width="450" height="450">
+{% endif %}
+{% if post.image3 %}
+<img src="{{ post.image3.url }}" alt="{{ post.image3.name }}" class="img-thumbnail" width="450" height="450">
 {% endif %}
 </p>
 <p>{% if post.file %}<a href="{{ post.file.url }}"> {{post.file}} {% endif %}</a></p>
 </div>
 <div class="text-right">
 <hr class="intro-divider"/>
+<h3><a href="{% url 'genre_category' category=post.genre.category %}">{{post.genre.category}}</a></h3>
 <a href="{% url 'profile_page2' user=post.user %}"><h3><div class="text-center">written by:{{post.user|safe|linebreaksbr}}</div></h3></a>
-<h3><div class="text-right">{{post.published_date}}</div></h3>
+<h3>{{post.published_date}}</h3>
 <br/>
 </div>
 <br/>
