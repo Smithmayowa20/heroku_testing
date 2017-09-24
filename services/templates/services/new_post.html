@@ -1,5 +1,4 @@
 {% extends 'services/base.html' %}
-{% load widget_tweaks %}
 {% block header %}
 <br>
 <br>
@@ -21,7 +20,7 @@
 				{% for field in form %}
 				<p>
 				{{ field.label_tag }}<br>
-				{{ field|attr:"rows:10 cols:10" }}
+				{{ field }}
 				{% if field.help_text %}
 				<small style="display: none">{{ field.help_text }}</small>
 				{% endif %}

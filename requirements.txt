@@ -10,4 +10,3 @@ boto3
 django-storages
 python-decouple
 pillow
-widget_tweaks
