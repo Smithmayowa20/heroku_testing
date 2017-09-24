@@ -11,21 +11,27 @@ class RegistroperfilForm(RegistrationFormUniqueEmail):
 	last_name = CharField(required = True)
 
 class PostForm(ModelForm):
+	text = CharField(
+        widget = Textarea(),
+)
 	class Meta:
 		model = Post
 		fields = ('text','image1','image2','image3','file')
 
 			
 class CommentForm(ModelForm):
+	text = CharField(
+        widget = Textarea(),
+)
 	class Meta:
 		model = Comment
 		fields = ('text',)
-		widgets ={
-			'summary' : Textarea(attrs={'rows':80, 'cols':20}),
-			}
 		
 		
 class User_Profile_Form(ModelForm):
+	short_bio = CharField(
+        widget = Textarea(),
+)
 	class Meta:
 		model = User_Profile
 		fields = ('first_name','middle_name','last_name','short_bio','profile_picture','link')

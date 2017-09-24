@@ -11,6 +11,7 @@
 	   {% endblock aside %}
 	   {% block header %}
 	   <br>
+	  <div class="col-md-12 col-xs-12">
 	<div class="text-center">
 		<div style="background-color:aqua;">
 		 <br>
@@ -53,8 +54,9 @@
 			<hr class="intro-divider"/>
 		</div>
 </div>
-
-
+</div>
+	{% endblock header %}
+	{% block content %}
 	 <br>
 	 <br>
 	 {% if promoted_post %}
@@ -88,7 +90,7 @@
 	   </div></div><br/><br/>  
 	   {% endfor %} 
 	{% endif %}
-	   {% endblock header %}
+	   {% endblock content %}
 	   {% block aside2 %}
 		<br>
 	   <br>

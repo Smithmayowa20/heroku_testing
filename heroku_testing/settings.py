@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 	'services',
 	'registration',
 	'storages',
+	'widget_tweaks',
 ]
 
 MIDDLEWARE = [
