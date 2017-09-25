@@ -209,8 +209,12 @@ def new_post(request,category):
 		form = form_class(request.POST,request.FILES)
 		if form.is_valid():
             # create an instance but don't save yet
-			thing = form.save(commit=False)
-
+			thing = Post()
+			thing.text = form.cleaned_data["text"]
+			thing.image1 = form.cleaned_data["image1"]
+			thing.image2 = form.cleaned_data["image2"]
+			thing.image3 = form.cleaned_data["image3"]
+			thing.file = form.cleaned_data["file"]
             # set the additional details
 			thing.user = request.user
 			genre = Genre.objects.get(category = category)
@@ -251,7 +255,7 @@ def new_comment(request,pk,position=0,parent_no=None):
 		if form.is_valid():
             # create an instance but don't save yet
 			thing = form.save(commit=False)
-
+			
             # set the additional details
 			thing.user = request.user
 			thing.post = post
@@ -282,8 +286,8 @@ def new_comment1(request,post,position=0,parent_no=None):
 		form = form_class(request.POST)
 		if form.is_valid():
             # create an instance but don't save yet
-			thing = form.save(commit=False)
-
+			thing = Comment()
+			thing.text = form.cleaned_data["text"]
             # set the additional details
 			if request.user.is_anonymous():
 				pass

@@ -11,9 +11,8 @@
 	   {% endblock aside %}
 	   {% block header %}
 	   <br>
-	  <div class="col-md-12 col-xs-12">
-	<div class="text-center">
 		<div style="background-color:aqua;">
+		<div class="text-center">
 		 <br>
 		<h1>
 		<div class="text-left">
@@ -30,7 +29,7 @@
 				<a data-toggle="collapse" data-target="#demo1">Create A New Post In A Talent Category
 				<span class="glyphicon glyphicon-chevron-down"></span></a> 
 			</h5>
-				<div id="demo1" class="collapse">
+				<div id="demo1" class="collapse in">
 					<h6>
 					{% for i in category %}
 					<a href="{% url 'new_post' category=i.category %}">{{i.category}}</a> |
@@ -43,7 +42,7 @@
 				<a data-toggle="collapse" data-target="#demo">Filter Post By
 				<span class="glyphicon glyphicon-chevron-down"></span></a>
 			</h5>
-				<div id="demo" class="collapse">
+				<div id="demo" class="collapse in">
 					<h6>
 						<a href="">categories</a> |
 						<a href="">popularity</a> |
@@ -53,7 +52,6 @@
 				</div> 
 			<hr class="intro-divider"/>
 		</div>
-</div>
 </div>
 	{% endblock header %}
 	{% block content %}

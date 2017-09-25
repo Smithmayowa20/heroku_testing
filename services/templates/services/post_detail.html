@@ -52,7 +52,11 @@
 <div class="container">
 <form method="POST" class="post-form">
 	    {% csrf_token %}
-        {{ form.as_p }}
+        <div class="form-group">
+			<label for="text">Text:</label>
+			<textarea type="text" style="margin-left:5%;height:200px;width:350px" class="form-control" name="text">
+			</textarea>
+		</div>
         <button type="submit" class="save btn btn-default">Save</button>
 </form>
 </div>
