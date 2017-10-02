@@ -18,7 +18,10 @@
 {% endblock header %}	   
 
 {% block content %}
-
+<br>
+{% if post.image1 %}
+<img src="{{ post.image1.url }}" alt="{{ post.image1.name }}" class="img-thumbnail" width="450" height="450">
+{% endif %}
 <p><h3>{% for i in tagged_users %}
 	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
 	{% endfor %}
@@ -26,9 +29,6 @@
 <hr class="intro-divider"/>
 <div class="text-center">
 <p>
-{% if post.image1 %}
-<img src="{{ post.image1.url }}" alt="{{ post.image1.name }}" class="img-thumbnail" width="450" height="450">
-{% endif %}
 {% if post.image2 %}
 <img src="{{ post.image2.url }}" alt="{{ post.image2.name }}" class="img-thumbnail" width="450" height="450">
 {% endif %}
@@ -53,22 +53,22 @@
 	    {% csrf_token %}
         <div class="form-group">
 			<label for="text">Text:</label>
-			<textarea type="text" style="margin-left:5%;height:200px;width:250px" class="form-control" name="text">
+			<textarea type="text" style="margin-left:5%;height:200px;width:90%" class="form-control" name="text">
 			</textarea>
 		</div>
         <button type="submit" class="save btn btn-default">Save</button>
 </form>
 <br>
 <br>
+</div>
 {% for comment_ in comment %}
-<p>
+<div class="text-left">
 <h4>{{comment_.text}}</h4>
 <h4>{{comment_.published_date}}</h4>
-</p>
+</div>
 <p>
 <a href="{% url 'new_comment' pk=post.pk position=comment_.position parent_no=comment_.pk%}" class="top-menu"><span class="btn btn-default">reply</span></a>
 </p>
-</div>
 <hr class="intro-divider"/>
 {% endfor %}
 {% endblock content %}

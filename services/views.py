@@ -10,6 +10,12 @@ from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 		
+		
+def top_vaunters(request,slug):
+	top_vaunters = [1,2]
+	profile = User_profile.objects.filter(user__in = top_vaunters)
+	return render(request,'services/top_vaunters.html',{'profile':profile})
+		
 @login_required
 def profile_page_edit(request,slug):
 	profile = User_Profile.objects.get(slug=slug)
@@ -49,16 +55,19 @@ def create_profile_page(request):
 		form = form_class()
 		return(render(request,'services/create_profile_page.html',{'form':form,}))
 
+@login_required
 def genre_follow(request,category):
 	genre = Genre.objects.get(category=category)
 	genre.add_follower(request.user)
 	return redirect('all_categories')
-		
+
+@login_required	
 def genre_unfollow(request,category):
 	genre = Genre.objects.get(category=category)
 	genre.remove_follower(request.user)
 	return redirect('all_categories')
-	
+
+@login_required	
 def get_picture(profile):
 	if profile.profile_picture:
 		return True
@@ -100,6 +109,7 @@ def profile_page(request,user=None):
 		else:
 			return redirect('landing_page')
 			
+			
 @login_required
 def user_feed(request):
 	try:
@@ -108,15 +118,20 @@ def user_feed(request):
 		return redirect('create_profile_page')
 	following_users = user.following.all()
 	following_post = Post.objects.filter(user__in=following_users)
-	category_snippet = Genre.objects.all()
+	category = Genre.objects.all()
+	category_snippet = category[:4]
+	category_remainder = category[4:]
 	promoted_post = (Post.objects.filter(front_page = True).order_by('-published_date'))[:5]
-	user_follower = user.followers.all()
-	user_following = user.following.all()
+	user_follower = User_Profile.objects.filter(user__in=user.followers.all())
+	user_following = User_Profile.objects.filter(user__in=following_users)
+	user_follower1 = [ i for i in user_follower if i.user.is_authenticated() ]
+	user_following1 = [ i for i in user_following if i.user.is_authenticated() ]
 	context = {'post':following_post, 'promoted_post':promoted_post,
-	'category':category_snippet, 'profile':user, 'user_follower':user_follower,
-	'user_following':user_following}
+	'category_snippet':category_snippet, 'category':category,
+	'category_remainder':category_remainder, 'profile':user,
+	'user_follower':user_follower1, 'len_user_follower':len(user_follower1),
+	'len_user_following':len(user_following1),'user_following':user_following1}
 	return (render(request,'services/user_feed.html',context))
-
 		
 def landing_page(request):
 	if request.user.is_authenticated():

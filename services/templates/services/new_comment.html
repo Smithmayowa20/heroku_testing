@@ -15,18 +15,15 @@
 			<div class="text-center">
 			<form method="POST" class="post-form">
 				{% csrf_token %}
-				{% for field in form %}
-				<p>
-				{{ field.label_tag }}<br>
-				{{ field }}
-				{% if field.help_text %}
-				<small style="display: none">{{ field.help_text }}</small>
-				{% endif %}
-				{% for error in field.errors %}
-				<p style="color: red">{{ error }}</p>
-				{% endfor %}
-				</p>
-				{% endfor %}
+			<div class="col-md-4"></div>
+			<div class="col-md-4">
+			<div class="form-group">
+			<label for="text">Text:</label>
+			<textarea type="text" style="height:200px;width:90%" class="form-control" name="text">
+			</textarea>
+			</div>
+			</div>
+			<div class="col-md-4"></div>
 			
 			<button type="submit" class="save btn btn-default">Submit</button>
 			</form>

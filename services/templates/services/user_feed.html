@@ -26,28 +26,38 @@
 			<hr class="intro-divider"/> 
 		</h1> 	
 			<h5>
-				<a data-toggle="collapse" data-target="#demo1">Create A New Post In A Talent Category
+				Create A New Post In A Talent Category<a data-toggle="collapse" data-target="#demo1">
 				<span class="glyphicon glyphicon-chevron-down"></span></a> 
 			</h5>
 				<div id="demo1" class="collapse in">
 					<h6>
-					{% for i in category %}
-					<a href="{% url 'new_post' category=i.category %}">{{i.category}}</a> |
+					{% for i in category_snippet %}
+					<a href="{% url 'new_post' category=i.category %}">{{i.category|title}}</a> |
 					{% endfor %}
+						{% if category_remainder %}
+						<a data-toggle="collapse" data-target="#demo11">Others</a>
+						<div id="demo11" class="collapse">
+						<h6>
+						{% for i in category_remainder %}
+						<a href="{% url 'new_post' category=i.category %}">{{i.category|title}}</a> |
+						{% endfor %}
+						</h6>
+						</div>
+						{% endif %}
 					</h6>
 				</div>
 			
 
 			<h5>
-				<a data-toggle="collapse" data-target="#demo">Filter Post By
+				Filter Post By<a data-toggle="collapse" data-target="#demo">
 				<span class="glyphicon glyphicon-chevron-down"></span></a>
-			</h5>
+			</h5>	
 				<div id="demo" class="collapse in">
 					<h6>
-						<a href="">categories</a> |
-						<a href="">popularity</a> |
-						<a href="">no of comments</a> |
-						<a href="">most likes</a>
+						<a href="{% url 'all_categories' %}">Categories</a>|
+						<a href="">Popularity</a> |
+						<a href="">No-Of-Comments</a> |
+						<a href="">Most-Likes</a>
 					</h6>
 				</div> 
 			<hr class="intro-divider"/>
@@ -66,33 +76,39 @@
 <img src="{{ i.image1.url }}" alt="{{ i.image1.name }}" class="img-thumbnail" width="450" height="450">
 		{% endif %}
 		</div>
-	   <div class="col-md-12 col-xs-12"><p><h5>{{ i.text|safe|linebreaksbr }}</h5></p>
-	   <h6><div class="text-right">{{i.published_date}}</div></h6>
-	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right"> {{i.user}}</div></h6></a>
+	   <div class="col-md-12 col-xs-12"><p><h5>{% for i in tagged_users %}
+	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
+	{% endfor %}
+{{ i.text|safe|linebreaksbr }}</h5></p>
 	   <pre>BOOSTED POST</pre>
+	   <h6><div class="text-right">{{i.published_date}}</div></h6>
+	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right">Author : {{i.user}}</div></h6></a>
+	   <a href="{% url 'genre_category' category=i.genre.category %}"><h6><div class="text-right">Talent-Category : {{i.genre.category}}</div></h6></a>
 	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
 	   </div></div><br/><br/>
 	   {% endfor %}
 	 {% endif %} 
+	 
     {% if post %}
 	   {% for i in post %}
 	   <div class="">
 	   <div class="row">
+	   <div class="text-center">
 	   {% if i.image1 %}
 <img src="{{ i.image1.url }}" alt="{{ i.image1.name }}" class="img-thumbnail" width="450" height="450">
-{% endif %}
-	   <div class="col-md-12 col-xs-12"><p><h5>{{ i.text|safe|linebreaksbr }}</h5></p>
+		{% endif %}
+		</div>
+	   <div class="col-md-12 col-xs-12"><p><h5>{% for i in tagged_users %}
+	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
+	{% endfor %}
+{{ i.text|safe|linebreaksbr }}</h5></p>
 	   <h6><div class="text-right">{{i.published_date}}</div></h6>
-	   <a href="{% url 'profile_page2' user=i.user %}"> <h6><div class="text-right"> {{i.user}}</div></h6></a>
+	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right">Author : {{i.user}}</div></h6></a>
+	   <a href="{% url 'genre_category' category=i.genre.category %}"><h6><div class="text-right">Talent-Category : {{i.genre.category}}</div></h6></a>
 	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
-	   </div></div><br/><br/>  
+	   </div></div><br/><br/>
 	   {% endfor %} 
 	{% endif %}
 	   {% endblock content %}
 	   {% block aside2 %}
-		<br>
-	   <br>
-	   <br><br>
-	   <br>
-	   <br>
 	   {% endblock aside2 %}

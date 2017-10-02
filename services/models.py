@@ -18,7 +18,7 @@ class User_Profile(models.Model):
 	profile_picture = models.ImageField(
 			blank=True, null=True)
 	user = models.OneToOneField(User, blank=True, null=True)
-	link = models.Url = models.URLField(
+	link =  models.URLField(
 			blank=True, null=True)
 	followers = models.ManyToManyField(User,
 			blank=True,related_name="followers")
