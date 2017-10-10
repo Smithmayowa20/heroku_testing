@@ -202,3 +202,5 @@ AWS_HEADERS = {
 
 MEDIA_URL = '//{}.s3.amazonaws.com/media/'.format(AWS_STORAGE_BUCKET_NAME)
 DEFAULT_FILE_STORAGE = 'heroku_testing.store_backends.MediaStorage'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

@@ -7,10 +7,15 @@
 		<div class="text-center">
 		<div style="background-color:aqua">
 		<br/>
-		<h4>{{ profile.user|upper }}'S PROFILE PAGE <br/><br/>
-		
+		<h4>{{ profile.user|upper }}'S PROFILE PAGE </h4><br/><br/>
 		</div>
 		<br/>
+		{% if user.is_authenticated %}
+		{% if user == profile.user %}
+		<p><h5><a href="{% url 'profile_page_edit' slug=profile.slug %}">Edit Your Profile</a></h5></p>
+		{% endif %}
+		{% endif %}
+		<br>
 		{% if image %}
 		<p><img src="{{ profile.profile_picture.url }}" alt="{{ profile.profile_picture.name }}" class="img-thumbnail" width="450" height="450"></p>
 		{% else %}
@@ -19,18 +24,21 @@
 		
 		<br/>
 		<br/> 
+
+ 
+
 		{% if user.is_authenticated %}
 			{% if user != profile.user %}
 				{% if user in profile_followers %}
-				<a href="{% url 'unfollow' user1=profile.user %}">
-					<span class="btn btn-info">
+				<a id="unfollow" href="{% url 'unfollow' user1=profile.user %}">
+					<span id="unfollow1" class="btn btn-info">
 						Unfollow - {{profile.user|title}} 
 					</span>
 				</a>
 				<br/><br/>
 				{% else %}
-				<a href="{% url 'follow' user1=profile.user %}">
-					<span class="btn btn-info">
+				<a id="follow" href="{% url 'follow' user1=profile.user %}">
+					<span id="unfollow2" class="btn btn-info">
 						Follow - {{profile.user|title}} 
 					</span>
 				</a>
@@ -58,9 +66,22 @@
 		{% for i in post %}
 			<div class="">
 	   <div class="row">
-	   <div class="col-md-12 col-xs-12"><p><h4>{{ i.text }}</h4></p>
+	   <div class="col-md-12 col-xs-12"><p><h5>{% for i in tagged_users %}
+	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
+	{% endfor %}
+{{ i.text|linebreaksbr }}</h5></p>
+	   <pre>BOOSTED POST</pre>
+	   like unlike reply
 	   <h6><div class="text-right">{{i.published_date}}</div></h6>
-	   <a href="{% url 'profile_page2' user=i.user %}"> <h6><div class="text-right"> {{i.user}}</div></h6></a>
+	   <div class="text-right">
+	   {% if image %}
+		<img src="{{ profile.profile_picture.url }}" alt="" class="img-thumbnail" width="20" height="20">
+		{% else %}
+		<img src="{% static 'services/img/mohamed_y.jpg' %}" alt="" class="img-thumbnail" width="20" height="20">
+		{% endif %}
+		</div>
+	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right">Author : {{i.user}}</div></h6></a>
+	   <a href="{% url 'genre_category' category=i.genre.category %}"><h6><div class="text-right">Talent-Category : {{i.genre.category}}</div></h6></a>
 	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
 	   </div></div><br/><br/>  
 			{% endfor %}
@@ -71,3 +92,6 @@
 		</div>
 	<hr class="divider">
 {% endblock content %}
+
+{% block javascript %}
+{% endblock %}

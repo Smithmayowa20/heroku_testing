@@ -1,11 +1,12 @@
 {% extends 'services/base.html' %}
+{% load static from staticfiles %}
        {% block title %} {{block.super}} {% endblock title %}
 
 {% block header %}
-<br/>
 <br>
 <br>
 <div style="background-color:aqua;">
+<br>
 <br>
 <div class="container-fliud">
 <div class="text-center">
@@ -18,36 +19,48 @@
 {% endblock header %}	   
 
 {% block content %}
-<br>
+<div style="background-color:white">
+<div class="container">
+<div class="container">
+<div class="text-center">
 {% if post.image1 %}
-<img src="{{ post.image1.url }}" alt="{{ post.image1.name }}" class="img-thumbnail" width="450" height="450">
+<img src="{{ post.image1.url }}" alt="{{ post.image1.name }}" class="img-thumbnail" width="80%" height="450">
 {% endif %}
 <p><h3>{% for i in tagged_users %}
 	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
 	{% endfor %}
 {{ post.text|safe|linebreaksbr }}</h3></p>
 <hr class="intro-divider"/>
-<div class="text-center">
 <p>
 {% if post.image2 %}
-<img src="{{ post.image2.url }}" alt="{{ post.image2.name }}" class="img-thumbnail" width="450" height="450">
+<img src="{{ post.image2.url }}" alt="{{ post.image2.name }}" class="img-thumbnail" width="80%" height="450">
 {% endif %}
 {% if post.image3 %}
-<img src="{{ post.image3.url }}" alt="{{ post.image3.name }}" class="img-thumbnail" width="450" height="450">
+<img src="{{ post.image3.url }}" alt="{{ post.image3.name }}" class="img-thumbnail" width="80%" height="450">
 {% endif %}
 </p>
 <p>{% if post.file %}<a href="{{ post.file.url }}"> {{post.file}} {% endif %}</a></p>
 </div>
 <div class="text-right">
 <hr class="intro-divider"/>
-<h3><a href="{% url 'genre_category' category=post.genre.category %}">{{post.genre.category}}</a></h3>
-<a href="{% url 'profile_page2' user=post.user %}"><h3><div class="text-center">written by:{{post.user|safe|linebreaksbr}}</div></h3></a>
-<h3>{{post.published_date}}</h3>
+<h4><a href="{% url 'genre_category' category=post.genre.category %}">Category : {{post.genre.category}}</a></h4>
+<a href="{% url 'profile_page2' user=post.user %}"><h4>Written By: {{post.user|safe|linebreaksbr}}</h4></a>
+<h4>{{post.published_date}}</h4>
+
+	   {% if post.user_profile.profile_picture %} 
+	   <img src="{{ post.user_profile.profile_picture.url }}" alt="{{ post.user_profile.profile_picture.name }}" class="img-circle" width="40" height="40">
+	   {% else %}
+	   <img src="{% static 'services/img/mohamed_y.jpg' %}" alt="" class="img-circle" width="40" height="40">
+	   {% endif %}
+	   </div>
+	   </div>
+	   
+	   
 <br/>
-</div>
-<br/>
+
+
 <div class="text-left">
-<h3>COMMENTS</h3>
+<h3 class="text-center">COMMENTS</h3>
 <hr class="intro-divider"/>
 <form method="POST" class="post-form">
 	    {% csrf_token %}
@@ -62,13 +75,30 @@
 <br>
 </div>
 {% for comment_ in comment %}
-<div class="text-left">
+<div class="row">
+<div class="col-md-2 col-xs-2"></div>
+<div class="col-md-10 col-xs-10">
 <h4>{{comment_.text}}</h4>
-<h4>{{comment_.published_date}}</h4>
-</div>
+<h6 class="text-right">{{comment_.published_date}}</h6>
+
+
 <p>
+				{% if user in comment_likes %}
+				<a id="unlike_comment" href="{% url 'unlike_comment' pk=post.pk pk_1=comment_.pk %}" class="top-menu">				
+						<span class="btn btn-default">unlike</span>
+				</a>
+				{% else %}
+				<a id="like_comment" href="{% url 'like_comment' pk=post.pk pk_1=comment_.pk %}" class="top-menu">
+					<span class="btn btn-default">like</span>	  
+				</a>
+				{% endif %}
+
 <a href="{% url 'new_comment' pk=post.pk position=comment_.position parent_no=comment_.pk%}" class="top-menu"><span class="btn btn-default">reply</span></a>
 </p>
+</div>
+</div>
 <hr class="intro-divider"/>
 {% endfor %}
+</div>
+</div>
 {% endblock content %}

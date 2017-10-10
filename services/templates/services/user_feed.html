@@ -3,28 +3,27 @@
 
 
        {% block title %} {{block.super}} {% endblock title %}
-	   {% block aside %}
-	   <h5>Your Followers:
-	   {% for i in user_follower %} <a href="{% url 'profile_page2' user=i %}">{{i}}</a>{% endfor %}</h5>
-	   <h5>People You Follow:
-	   {% for i in user_following %}<a href="{% url 'profile_page2' user=i %}"> {{i}}</a> {% endfor %}</h5>
-	   {% endblock aside %}
+	   {% block aside %} {{block.super}} {% endblock aside %}
 	   {% block header %}
 	   <br>
 		<div style="background-color:aqua;">
+		<div class="row">
 		<div class="text-center">
 		 <br>
 		<h1>
-		<div class="text-left">
+		<span class="col-md-3 col-xs-3">
 			{% if profile.profile_picture %}
 	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"> <img src="{{ profile.profile_picture.url }}" alt="{{ profile.profile_picture.name }}" class="img-circle" width="80" height="80"></a></h6></p>
 	   {% else %}
-	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"><img src="{% static 'services/img/mohamed_y.jpg' %}" alt="upload your picture" class="img-circle" width="50" height="50"></a></h6></p>
+	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"><img src="{% static 'services/img/mohamed_y.jpg' %}" alt="upload your picture" class="img-circle" width="80" height="80"></a></h6></p>
 	   {% endif %}
-	   </div>
+	   </span>
+	   <span class="col-md-6 col-xs-6">
 				Your Feed 
 			<hr class="intro-divider"/> 
+	</span>
 		</h1> 	
+		<span class="col-md-12 col-xs-12">
 			<h5>
 				Create A New Post In A Talent Category<a data-toggle="collapse" data-target="#demo1">
 				<span class="glyphicon glyphicon-chevron-down"></span></a> 
@@ -49,64 +48,124 @@
 			
 
 			<h5>
-				Filter Post By<a data-toggle="collapse" data-target="#demo">
+				Filter By<a data-toggle="collapse" data-target="#demo">
 				<span class="glyphicon glyphicon-chevron-down"></span></a>
 			</h5>	
 				<div id="demo" class="collapse in">
 					<h6>
+					Post's :
 						<a href="{% url 'all_categories' %}">Categories</a>|
 						<a href="">Popularity</a> |
 						<a href="">No-Of-Comments</a> |
 						<a href="">Most-Likes</a>
+						<br>
+					User's :
+						<a href="{% url 'top_vaunters' %}">Top-Vaunters</a>
 					</h6>
 				</div> 
 			<hr class="intro-divider"/>
+			</span>
+		</div>
 		</div>
 </div>
 	{% endblock header %}
 	{% block content %}
-	 <br>
-	 <br>
 	 {% if promoted_post %}
-	   {% for i in promoted_post %} 
-	   <div class="">
+	   {% for i in promoted_post %}
+	   <div style="background-color:white;">
+	   <div class="container">
 	   <div class="row">
+	   <div class="container">
 	   <div class="text-center">
-	   {% if i.image1 %}
-<img src="{{ i.image1.url }}" alt="{{ i.image1.name }}" class="img-thumbnail" width="450" height="450">
+	   	{% if i.image1 %}
+<img src="{{ i.image1.url }}" alt="{{ i.image2.name }}" class="img-thumbnail" width="70%" height="450">
+		{% endif %}
+		{% if i.image2 %}
+<img src="{{ i.image2.url }}" alt="{{ i.image2.name }}" class="img-thumbnail" width="70%" height="450">
+		{% endif %}
+		{% if i.image3 %}
+<img src="{{ i.image3.url }}" alt="{{ i.image3.name }}" class="img-thumbnail" width="70%" height="450">
 		{% endif %}
 		</div>
-	   <div class="col-md-12 col-xs-12"><p><h5>{% for i in tagged_users %}
-	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
+	   <div class="col-md-12 col-xs-12 container"><p><h5>{% for j in tagged_users %}
+	<a href="{% url 'profile_page2' user=i %}">@{{j}}</a>
 	{% endfor %}
-{{ i.text|safe|linebreaksbr }}</h5></p>
-	   <pre>BOOSTED POST</pre>
-	   <h6><div class="text-right">{{i.published_date}}</div></h6>
+{{ i.text|linebreaksbr }}</h5></p>
+	   <div class="btn btn-block btn-default">BOOSTED POST</div>
+	   <div class="col-md-3 col-xs-3"> 
+	   <h5>
+				{% if user in post_likes %}
+				<a id="unlike" href="{% url 'unlike_post' pk=i.pk %}">				
+						<span class="btn btn-default">unlike</span>
+				</a>
+				{% else %}
+				<a id="like" href="{% url 'like_post' pk=i.pk %}">
+						<span class="btn btn-default">like</span>
+				</a>
+				{% endif %}
+				<a><span class="btn btn-default">share</span></a>
+		</h5>
+	   </div>
+	   <div class="col-md-9 col-xs-9">
+	   <div class="text-right"><h6>{{i.published_date}}</h6>
+	   {% if i.user_profile.profile_picture %} 
+	   <img src="{{ i.user_profile.profile_picture.url }}" alt="{{ i.user_profile.profile_picture.name }}" class="img-circle text-right" width="40" height="40">
+	   {% else %}
+	   <img src="{% static 'services/img/mohamed_y.jpg' %}" alt="" class="img-circle text-right" width="40" height="40">
+	   {% endif %}
 	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right">Author : {{i.user}}</div></h6></a>
 	   <a href="{% url 'genre_category' category=i.genre.category %}"><h6><div class="text-right">Talent-Category : {{i.genre.category}}</div></h6></a>
-	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
-	   </div></div><br/><br/>
+	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View Comments</span></p></a></div></div>
+	   </div></div></div></div></div><br/>
 	   {% endfor %}
 	 {% endif %} 
 	 
     {% if post %}
 	   {% for i in post %}
-	   <div class="">
+	   <div style="background-color:white;">
+	   <div class="container">
 	   <div class="row">
+	   <div class="container">
 	   <div class="text-center">
-	   {% if i.image1 %}
-<img src="{{ i.image1.url }}" alt="{{ i.image1.name }}" class="img-thumbnail" width="450" height="450">
+		   {% if i.image1 %}
+<img src="{{ i.image1.url }}" alt="{{ i.image2.name }}" class="img-thumbnail" width="70%" height="450">
+		{% endif %}
+		{% if i.image2 %}
+<img src="{{ i.image2.url }}" alt="{{ i.image2.name }}" class="img-thumbnail" width="70%" height="450">
+		{% endif %}
+		{% if i.image3 %}
+<img src="{{ i.image3.url }}" alt="{{ i.image3.name }}" class="img-thumbnail" width="70%" height="450">
 		{% endif %}
 		</div>
-	   <div class="col-md-12 col-xs-12"><p><h5>{% for i in tagged_users %}
+	   <div class="col-md-12 col-xs-12 container"><p><h5>{% for i in tagged_users %}
 	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
 	{% endfor %}
-{{ i.text|safe|linebreaksbr }}</h5></p>
-	   <h6><div class="text-right">{{i.published_date}}</div></h6>
+{{ i.text|linebreaksbr }}</h5></p>
+	   <div class="col-md-3 col-xs-3"> 
+	   <h5>
+				{% if user in post_likes %}
+				<a id="unlike" href="{% url 'unlike_post' pk=i.pk %}">				
+						<span class="btn btn-default">unlike</span>
+				</a>
+				{% else %}
+				<a id="like" href="{% url 'like_post' pk=i.pk %}">
+						<span class="btn btn-default">like</span>
+				</a>
+				{% endif %}
+				<a><span class="btn btn-default">share</span></a>
+	   </h5>
+	   </div>
+	   <div class="col-md-9 col-xs-9">
+	   <div class="text-right"><h6>{{i.published_date}}</h6>
+	   {% if i.user_profile.profile_picture %} 
+	   <img src="{{ i.user_profile.profile_picture.url }}" alt="{{ i.user_profile.profile_picture.name }}" class="img-circle" width="40" height="40">
+	   {% else %}
+	   <img src="{% static 'services/img/mohamed_y.jpg' %}" alt="" class="img-circle" width="40" height="40">
+	   {% endif %}
 	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right">Author : {{i.user}}</div></h6></a>
 	   <a href="{% url 'genre_category' category=i.genre.category %}"><h6><div class="text-right">Talent-Category : {{i.genre.category}}</div></h6></a>
-	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
-	   </div></div><br/><br/>
+	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div></div>
+	   </div></div></div></div></div><br/>
 	   {% endfor %} 
 	{% endif %}
 	   {% endblock content %}

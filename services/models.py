@@ -24,6 +24,8 @@ class User_Profile(models.Model):
 			blank=True,related_name="followers")
 	following = models.ManyToManyField(User,
 			blank=True,related_name="following")
+	top_vaunter = models.BooleanField(default=False)
+	
 	
 	def publish(self):
 		self.save()
@@ -43,6 +45,9 @@ class User_Profile(models.Model):
 	def unfollower(self,unfollower):
 		self.followers.remove(unfollower)
 
+	def top_vaunt(self):
+		self.top_vaunter = True
+		self.save()
 		
 class Post(models.Model):
 	genre = models.ForeignKey('Genre',
@@ -71,7 +76,8 @@ class Post(models.Model):
 			blank=True, null=True)
 	user_profile = models.ForeignKey('User_Profile',
 			blank=True,null=True)
-
+	likes = models.ManyToManyField(User,
+			blank=True, related_name="post_like")
 	
 	def publish(self):
 		self.published_date = timezone.now()
@@ -93,9 +99,15 @@ class Post(models.Model):
 	def __str__(self):
 		return self.text
 		
+	def like(self,follow):
+		self.likes.add(follow)
+		
+	def dislike(self,follow):
+		self.likes.remove(follow)
 	
 class Comment(models.Model):
-	user = models.ForeignKey(User, blank=True, null=True)
+	user = models.ForeignKey(User,
+			blank=True, null=True)
 	post = models.ForeignKey(Post, null=True)
 	text = models.TextField()
 	created_date = models.DateTimeField(
@@ -106,7 +118,10 @@ class Comment(models.Model):
 			blank=True, null=True)
 	parent_comment_no = models.PositiveSmallIntegerField(
 	blank=True, null=True)
-	
+	likes = models.ManyToManyField(User,
+			blank=True, related_name="comment_likes")
+			
+			
 	def publish(self):
 		self.published_date = timezone.now()
 		self.save()
@@ -114,7 +129,13 @@ class Comment(models.Model):
 	def __str__(self):
 		return self.text
 	
-	
+	def like(self,follow):
+		self.likes.add(follow)
+		
+	def dislike(self,follow):
+		self.likes.remove(follow)
+		
+		
 class Genre(models.Model):
 	category = models.CharField(max_length=200)
 	about = models.CharField(max_length=200,

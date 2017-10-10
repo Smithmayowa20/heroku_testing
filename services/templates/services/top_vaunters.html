@@ -1,21 +1,37 @@
 {% extends 'services/base.html' %}
-       {% block title %} {{block.super}} {% endblock title %}
+{% load static from staticfiles %}
 
-{% block header %}
-<br/>
+
+
+       {% block title %} {{block.super}} {% endblock title %}
+	   {% block aside %}
+	   {{block.super}}
+	   {% endblock aside %}
+	   {% block header %}
 <br>
 <br>
 <div style="background-color:aqua;">
+<div class="container-fluid">
 <br>
-<div class="container-fliud">
-<div class="text-center">
-<h1>Post Detail</h1>
+<h2 class="text-center text-lg text-uppercase my-0"> <strong>TOP VAUNTERS</strong></h2>
 <hr class="intro-divider"/>
+<br>
+<br>
 </div>
 </div>
-		<br>
-</div> 
 {% endblock header %}	   
 {% block content %}
-<br>
+{% for profile in profiles %}
+	   <div style="background-color:white;">
+	   <div class="container">
+	   <div class="row">
+	   <div class="container">
+	   <div class="text-center">
+	   <h4>{{ profile.user|upper }}</h4>
+	   </div>
+	   </div>
+	   </div>
+	   </div>
+	   </div>
+{% endfor %}
 {% endblock content %}
