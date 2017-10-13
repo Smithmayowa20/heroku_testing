@@ -50,40 +50,57 @@
 {% endblock header %}
 {% block content %}
 		
-		<div class="text-center">
+		<div class="text-center" style="background-color:white">
 		<br/>
 		<br/>
 		<p><h4>Short Bio:</h4> {{ profile.short_bio }} </p>
 		<br/>
 		<br/>
 		<br/>
-		<h4> <div class="btn btn-block btn-success">{{profile.user|upper}} POSTS</div>  </h4>
 		<hr class="divider">
 		</div>
 		<div>
+		<br>
+		<br>
+		<h4> <div class="btn btn-block btn-success">{{profile.user|upper}} POSTS</div>  </h4>
+		<br>
+		<br>
 		<p>
 		{% if post %}
 		{% for i in post %}
-			<div class="">
+		<div style="background-color:white;">
+	   <div class="container">
 	   <div class="row">
-	   <div class="col-md-12 col-xs-12"><p><h5>{% for i in tagged_users %}
+	   <div class="container">
+	   <p><h5>{% for i in tagged_users %}
 	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
 	{% endfor %}
 {{ i.text|linebreaksbr }}</h5></p>
-	   <pre>BOOSTED POST</pre>
-	   like unlike reply
-	   <h6><div class="text-right">{{i.published_date}}</div></h6>
-	   <div class="text-right">
-	   {% if image %}
-		<img src="{{ profile.profile_picture.url }}" alt="" class="img-thumbnail" width="20" height="20">
-		{% else %}
-		<img src="{% static 'services/img/mohamed_y.jpg' %}" alt="" class="img-thumbnail" width="20" height="20">
-		{% endif %}
-		</div>
+	   <div class="col-md-3 col-xs-3"> 
+	   <h5>
+				{% if user in post_likes %}
+				<a id="unlike" href="{% url 'unlike_post' pk=i.pk %}">				
+						<span class="btn btn-default">unlike</span>
+				</a>
+				{% else %}
+				<a id="like" href="{% url 'like_post' pk=i.pk %}">
+						<span class="btn btn-default">like</span>
+				</a>
+				{% endif %}
+				<a><span class="btn btn-default">share</span></a>
+		</h5>
+	   </div>
+	   <div class="col-md-9 col-xs-9">
+	   <div class="text-right"><h6>{{i.published_date}}</h6>
+	   {% if i.user_profile.profile_picture %} 
+	   <img src="{{ i.user_profile.profile_picture.url }}" alt="{{ i.user_profile.profile_picture.name }}" class="img-circle text-right" width="40" height="40">
+	   {% else %}
+	   <img src="{% static 'services/img/mohamed_y.jpg' %}" alt="" class="img-circle text-right" width="40" height="40">
+	   {% endif %}
 	   <a href="{% url 'profile_page2' user=i.user %}"><h6><div class="text-right">Author : {{i.user}}</div></h6></a>
 	   <a href="{% url 'genre_category' category=i.genre.category %}"><h6><div class="text-right">Talent-Category : {{i.genre.category}}</div></h6></a>
-	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View comments</span></p></a></div>
-	   </div></div><br/><br/>  
+	   <a href="{% url 'post_detail' pk=i.pk %}"><p class="text-right"><span class="btn btn-info">View Comments</span></p></a></div>
+	   </div></div></div></div></div><br/><br/>  
 			{% endfor %}
 		{% if post_no > 10 %}
 		<div class="btn btn-block btn-info">More {{profile.user}} posts</div>

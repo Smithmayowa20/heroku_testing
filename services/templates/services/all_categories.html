@@ -1,9 +1,7 @@
-{% extends 'services/base.html' %}
+{% extends 'services/base1.html' %}
 {% block header %}
 <br>
 <br>
-<br>
-<div class="container">
 <div class="bg-faded p-4 my-4">
 	<div style="background-color:aqua;">
 <br>
@@ -11,18 +9,32 @@
 <h2 class="text-center text-lg text-uppercase my-0"> <strong>Choose Post Talent Category</strong></h2>
 <hr class="intro-divider"/>
 </div>
+<br>
 </div>
-<div class="text-center">
+</div>
+
+<div class="jumbotron">
+<div class="container">
 {% for i in genre %}
-<div class="col-xs-3 col-md-3">
+<div class="col-md-3 col-xs-12">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="text-center">{{i.category}}</h4>
+</div>
+<div class="panel-body">
+<div class="text-center">
 <p>
-<h4>{{i.category}}</h4>
+
 <h6>Snippets:{{i.about}}</h6>
 <h6>No of posts :</h6>
 <a href="{% url 'genre_category' category=i.category %}">view category posts</a>
 <br>
 <a href="{% url 'new_post' category=i.category %}">create post</a>
+</p>
 <br>
+</div>
+</div>
+<div class="panel-footer text-center">
 {% if request.user in i.follower_list %}
 <a href="{% url 'genre_unfollow' category=i.category %}">
 					<span class="btn btn-info">
@@ -36,11 +48,13 @@
 					</span>
 				</a>
 			{% endif %}
-</p>
-<br>
+</div>
+</div>
 </div>
 {% endfor %}
 </div>
+<br>
+<br>
 </div>
-</div>
+
 {% endblock header %}
