@@ -3,7 +3,25 @@
 
 
        {% block title %} {{block.super}} {% endblock title %}
-	   {% block aside %} {{block.super}} {% endblock aside %}
+	   {% block aside %} 
+					{% if user.is_authenticated %} 
+			<div class="container" style="background-color:white;">
+			<br>
+			<div class="text-center"><p>Followers</p></div>
+			<hr class="divider"/>
+			<p><h5>Total no :  </h5></p> 
+			<p><h5>Online :   </h5></p>
+				{% for i in user_follower %} <a href="{% url 'profile_page2' user=i %}">{{i}}</a>{% endfor %}
+			<div class="text-center"><h5><p>Following</p></h5></div>
+				<hr class="divider"/>
+				<p><h5>Total no :  </h5></p> 
+				<p><h5>Online :   </h5></p>
+				{% for i in user_following %}<a href="{% url 'profile_page2' user=i %}"> {{i}}</a> {% endfor %}
+			</div>
+		<br>
+		<br>
+					{% endif %} 
+	   {% endblock aside %}
 	   {% block header %}
 	   <br>
 		<div style="background-color:aqua;">
@@ -13,9 +31,11 @@
 		<h1>
 		<span class="col-md-3 col-xs-3">
 			{% if profile.profile_picture %}
-	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"> <img src="{{ profile.profile_picture.url }}" alt="{{ profile.profile_picture.name }}" class="img-circle" width="80" height="80"></a></h6></p>
+	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"> <img src="{{ profile.profile_picture.url }}"
+	   alt="{{ profile.profile_picture.name }}" class="img-circle" width="80" height="80"></a></h6></p>
 	   {% else %}
-	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"><img src="{% static 'services/img/mohamed_y.jpg' %}" alt="upload your picture" class="img-circle" width="80" height="80"></a></h6></p>
+	   <p><h6><a href="{% url 'profile_page_edit' slug=profile.slug %}"><img src="{% static 'services/img/mohamed_y.jpg' %}"
+	   alt="upload your picture" class="img-circle" width="80" height="80"></a></h6></p>
 	   {% endif %}
 	   </span>
 	   <span class="col-md-6 col-xs-6">

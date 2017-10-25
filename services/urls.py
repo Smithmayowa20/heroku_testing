@@ -6,6 +6,7 @@ from django.views.generic import (TemplateView,
 from django.conf import settings
 urlpatterns = [url(r'^profile/create/$',views.create_profile_page,name='create_profile_page'),
 url(r'^profile/edit/(?P<slug>[-\w]+)/$',views.profile_page_edit,name='profile_page_edit'),
+url(r'^user/list/$',views.user_list,name='user_list'),
 url(r'^new/post/(?P<category>[-\w]+)/$',views.new_post, name='new_post'),
 url(r'^like/post/(?P<pk>\d+)/$',views.like_post, name='like_post'),
 url(r'^unlike/post/(?P<pk>\d+)/$',views.unlike_comment, name='unlike_comment'),

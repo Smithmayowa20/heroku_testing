@@ -26,21 +26,19 @@
 {% if post.image1 %}
 <img src="{{ post.image1.url }}" alt="{{ post.image1.name }}" class="img-thumbnail" width="80%" height="450">
 {% endif %}
-<p><h3>{% for i in tagged_users %}
-	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
-	{% endfor %}
-{{ post.text|safe|linebreaksbr }}</h3></p>
-<hr class="intro-divider"/>
-<p>
 {% if post.image2 %}
 <img src="{{ post.image2.url }}" alt="{{ post.image2.name }}" class="img-thumbnail" width="80%" height="450">
 {% endif %}
 {% if post.image3 %}
 <img src="{{ post.image3.url }}" alt="{{ post.image3.name }}" class="img-thumbnail" width="80%" height="450">
 {% endif %}
-</p>
 <p>{% if post.file %}<a href="{{ post.file.url }}"> {{post.file}} {% endif %}</a></p>
 </div>
+<p><h3>{% for i in tagged_users %}
+	<a href="{% url 'profile_page2' user=i %}">@{{i}}</a>
+	{% endfor %}
+{{ post.text|safe|linebreaksbr }}</h3></p>
+<hr class="intro-divider"/>
 <div class="text-right">
 <hr class="intro-divider"/>
 <h4><a href="{% url 'genre_category' category=post.genre.category %}">Category : {{post.genre.category}}</a></h4>

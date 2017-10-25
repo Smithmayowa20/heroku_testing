@@ -5,7 +5,25 @@
 
        {% block title %} {{block.super}} {% endblock title %}
 	   {% block aside %}
-	   {{block.super}}
+	   
+	   				{% if user.is_authenticated %} 
+			<div class="container" style="background-color:white;">
+			<br>
+			<div class="text-center"><p>Followers</p></div>
+			<hr class="divider"/>
+			<p><h5>Total no :  </h5></p> 
+			<p><h5>Online :   </h5></p>
+				{% for i in user_follower %} <a href="{% url 'profile_page2' user=i %}">{{i}}</a>{% endfor %}
+			<div class="text-center"><h5><p>Following</p></h5></div>
+				<hr class="divider"/>
+				<p><h5>Total no :  </h5></p> 
+				<p><h5>Online :   </h5></p>
+				{% for i in user_following %}<a href="{% url 'profile_page2' user=i %}"> {{i}}</a> {% endfor %}
+			</div>
+		<br>
+		<br>
+					{% endif %} 
+	   
 	   {% endblock aside %}
 	   {% block header %}
 <br>

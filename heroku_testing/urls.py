@@ -33,6 +33,7 @@ urlpatterns = [
 	url(r'^accounts/register/$', MyRegistrationView.as_view(form_class=RegistrationFormUniqueEmail), name='registration_register'),
 	url(r'^accounts/', include('registration.backends.simple.urls')),
 	url(r'', include('services.urls')),
+	url(r'^oauth/', include('social_django.urls', namespace='social')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

@@ -24,6 +24,8 @@ class User_Profile(models.Model):
 			blank=True,related_name="followers")
 	following = models.ManyToManyField(User,
 			blank=True,related_name="following")
+	followed_genre = models.ManyToManyField('Genre',
+			blank=True,)
 	top_vaunter = models.BooleanField(default=False)
 	
 	
@@ -44,11 +46,18 @@ class User_Profile(models.Model):
 		
 	def unfollower(self,unfollower):
 		self.followers.remove(unfollower)
+		
+	def follow_genre(self,follow):
+		self.followed_genre.add(follow)
+		
+	def unfollow_genre(self,unfollow):
+		self.followed_genre.remove(unfollow)
 
 	def top_vaunt(self):
 		self.top_vaunter = True
 		self.save()
-		
+	
+	
 class Post(models.Model):
 	genre = models.ForeignKey('Genre',
 			blank=True,null=True)

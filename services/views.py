@@ -11,6 +11,10 @@ from django.contrib.auth.models import User
 from django.http import Http404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
+
+def user_list(request):
+	user = User.objects.all()
+	return render(request,'services/user_list.html',{'user':user})
 		
 def get_current_users(list_):
 	active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
@@ -76,14 +80,24 @@ def create_profile_page(request):
 
 @login_required
 def genre_follow(request,category):
+	try:
+		profile = User_Profile.objects.get(user=request.user)
+	except User_Profile.DoesNotExist:
+		return redirect('create_profile_page')
 	genre = Genre.objects.get(category=category)
 	genre.add_follower(request.user)
+	profile.follow_genre(genre)
 	return redirect('all_categories')
 
 @login_required	
 def genre_unfollow(request,category):
+	try:
+		profile = User_Profile.objects.get(user=request.user)
+	except User_Profile.DoesNotExist:
+		return redirect('create_profile_page')
 	genre = Genre.objects.get(category=category)
 	genre.remove_follower(request.user)
+	profile.unfollow_genre(genre)
 	return redirect('all_categories')
 
 @login_required	
@@ -176,7 +190,11 @@ def landing_page(request):
 @login_required	
 def all_categories(request):
 	genre = Genre.objects.all()
-	return (render(request,'services/all_categories.html',{'genre':genre}))
+	try:
+		user = User_Profile.objects.get(user=request.user)
+	except User_Profile.DoesNotExist:
+		return redirect('create_profile_page')
+	return (render(request,'services/all_categories.html',{'genre':genre,'profile':user}))
 	
 @login_required	
 def genre_category(request,category):
@@ -386,3 +404,15 @@ def edit(request,slug):
 		form = PostForm(instance=post)	
 		return render(request,'services/edit.html',{'post':post,'form':form})
 		
+		
+def browse_by_name(request,initial=None):
+     if initial:
+        things = User.objects.filter(username__istartswith=initial)
+        things = things.order_by('name')
+     else:
+        things = ('')
+
+     return render(request, '', {
+        'things': things,
+        'initial': initial,})
+	 
