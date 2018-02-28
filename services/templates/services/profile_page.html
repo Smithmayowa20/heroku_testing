@@ -13,6 +13,7 @@
 		{% if user.is_authenticated %}
 		{% if user == profile.user %}
 		<p><h5><a href="{% url 'profile_page_edit' slug=profile.slug %}">Edit Your Profile</a></h5></p>
+		<p><h5><a href="{% url 'auth_password_change' %}">Change Your Account password</a><h5></p>
 		{% endif %}
 		{% endif %}
 		<br>
